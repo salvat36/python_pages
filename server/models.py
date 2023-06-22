@@ -1,16 +1,20 @@
 from config import db
-
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy_serializer import SerializerMixin
 
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+
+
 metadata = MetaData(naming_convention={
     "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
 })
 
-db = SQLAlchemy(metadata=metadata)
+db = SQLAlchemy(app, metadata=metadata)
 
 # Models go here!
 class UserBook(db.Model, SerializerMixin):
@@ -85,3 +89,6 @@ class User(db.Model, SerializerMixin):
     
     def __repr__(self):
         return f'User {self.username}, {self.password}'
+    
+with app.app_context():
+    db.create_all()
