@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Switch, Route } from "react-router-dom";
 import Navbar from "./Navbar";
 import Home from "./Home";
+import Collection from "./Collection";
 
 function App() {
   return (
@@ -9,7 +10,7 @@ function App() {
       <Navbar />
       <Switch>
         <Route exact path='/books/:id'>
-          <Books/>
+          <Collection/>
         </Route>
         <Route>
           <Home/>
