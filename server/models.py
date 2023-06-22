@@ -46,7 +46,7 @@ class Book(db.Model, SerializerMixin):
     page_count = db.Column(db.Integer)
     
     created_at = db.Column(db.DateTime, server_default=db.func.now())
-    updated_at = db.Column(db.DateTime, on_update=db.func.now())
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
     
     user_books = db.relationship('UserBook', back_populates='book', cascade='all')
     users = association_proxy('user_books', 'user')
@@ -66,12 +66,12 @@ class User(db.Model, SerializerMixin):
     
     id = db.Column(db.Integer, primary_key=True)
     
-    username = db.Column(db.VarChar)
-    password = db.Column(db.VarChar)
+    username = db.Column(db.String(30))
+    password = db.Column(db.String(30))
     # email
     
     created_at = db.Column(db.DateTime, server_default=db.func.now())
-    updated_at = db.Column(db.DateTime, on_update=db.func.now())
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
     
     user_books = db.relationship('UserBook', back_populates='user', cascade='all')
     books = association_proxy('user_books', 'book')

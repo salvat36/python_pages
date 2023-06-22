@@ -8,7 +8,7 @@ from faker import Faker
 
 # Local imports
 from app import app
-from models import db, UserBook, Book, User
+from models import UserBook, Book, User, db
 
 fake = Faker()
 
@@ -22,7 +22,7 @@ def create_books():
             title = fake.words(2),
             author = fake.name(),
             genre = rc(genres),
-            page_count = rc(range(100, 3000)),
+            page_count = rc(range(100, 1000)),
             created_at = fake.date(),
             updated_at = fake.date()
         )
@@ -35,9 +35,9 @@ def create_users():
     users = []
     for _ in range(100):
         user = User(
-            username = fake.email()
-            password = randint(200, 1000)
-            created_at = fake.date()
+            username = fake.email(),
+            password = randint(200, 1000),
+            created_at = fake.date(),
             updated_at = fake.date()
         )
         users.append(user)
@@ -47,8 +47,8 @@ def create_user_books():
     user_books = []
     for _ in range(50):
         user_book = UserBook(
-            book_id = ([rc(book.id) for book in books]),
-            user_id = ([user.id for user in users])
+            book_id = rc([book.id for book in books]),
+            user_id = rc([user.id for user in users])
         )
         user_books.append(user_book)
     return user_books
