@@ -5,10 +5,21 @@ from random import randint, choice as rc
 
 # Remote library imports
 from faker import Faker
+from flask import Flask
 
 # Local imports
 from app import app
 from models import UserBook, Book, User, db
+
+
+
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+
+db.init_app(app)
+
+with app.app_context():
+    db.create_all()
 
 fake = Faker()
 
@@ -19,12 +30,12 @@ def create_books():
     books = []
     for _ in range(500):
         book = Book(
-            title = fake.words(2),
+            title = fake.word(),
             author = fake.name(),
             genre = rc(genres),
             page_count = rc(range(100, 1000)),
-            created_at = fake.date(),
-            updated_at = fake.date()
+            created_at = fake.date_time(),
+            updated_at = fake.date_time()
         )
         books.append(book)
     return books
@@ -35,15 +46,15 @@ def create_users():
     users = []
     for _ in range(100):
         user = User(
-            username = fake.email(),
+            username = fake.name(),
             password = randint(200, 1000),
-            created_at = fake.date(),
-            updated_at = fake.date()
+            created_at = fake.date_time(),
+            updated_at = fake.date_time()
         )
         users.append(user)
     return users
 
-def create_user_books():
+def create_user_books(books, users):
     user_books = []
     for _ in range(50):
         user_book = UserBook(
@@ -75,6 +86,6 @@ if __name__ == '__main__':
 
 
         print("Shelving UserBooks...")
-        userbooks = create_user_books()
+        userbooks = create_user_books(books, users)
         db.session.add_all(userbooks)
         db.session.commit()
