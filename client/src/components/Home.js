@@ -1,10 +1,13 @@
-import Bookcase from "./Bookcase"
+import Library from "./Library"
 
 const Home = () => {
   return (
-    <div>Bookcase
-    <Bookcase/>
+    <>
+    <h1>Library</h1>
+    <div>
+    <Library/>
     </div>
+    </>
   )
 }
 

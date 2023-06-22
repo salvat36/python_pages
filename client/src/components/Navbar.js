@@ -3,10 +3,10 @@ import React from 'react'
 const Navbar = () => {
   return (
     <div>
-    <li>Route Here</li>
-    <li>Route Here</li>
-    <li>Route Here</li>
-    <li>Route Here</li>
+    <li>Login</li>
+    <li>Bookcase</li>
+    <li>Books</li>
+    <li>Contact Us</li>
     </div>
   )
 }
