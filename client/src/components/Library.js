@@ -3,27 +3,21 @@ import User from './User';
 import Spine from './Spine';
 
 
-// !# Needs functions to "addBook" , "removeBook"
+// !# Needs functions to "addSpine" , "removeSpine"
 
 const Library = () => {
 
   const [spines, setSpines] = useState([]);
 
+
   const addSpine = (spine) => {
-    setSpine([...spines, spine])
+    setSpines([...spines, spine])
   }
 
   const removeSpine = (spine) => {
     setSpines([spines.filter((spine)=> spine.id )])
   }
 
-  const addUser = (users) => {
-    setUser([...users, user])
-  }
-
-  const removeUser = (user) => {
-    setSpines([users.filter((user)=> user.id )])
-  }
 
   return (
     <div>
