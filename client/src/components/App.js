@@ -8,6 +8,7 @@ import Login from "./Login";
 function App() {
 
   const [user, setUser] = useState(null);
+  const [login, setLogin] = useState(true)
 
   useEffect(()=> {
     fetch('/check_session')
@@ -19,6 +20,8 @@ function App() {
       }
       })
   }, []);
+
+
 
   // if (!user) return <Login onLogin={setUser} />;
   return (
