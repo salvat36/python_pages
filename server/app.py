@@ -25,19 +25,14 @@ db.init_app(app)
 
 api = Api(app)
 
-# @app.before_request
-# def create_database():
-#      db.create_all()
-
-# Views go here!
-
 #HOME
 @app.route('/')
 def home():
-    return '<h1> home page</h1>'
+    return '<h1>home page</h1>'
 
 #LOGIN
 @app.route('/login', methods=['GET', 'POST'])
+
 def login():
     data = request.get_json()
     username = data.get('username')
@@ -64,15 +59,16 @@ def signup():
         return make_response(user.to_dict(), 201)
     except Exception as e:
         return make_response({'error': str(e)}, 422)
+        return make_response({'error': str(e)}, 422)
     
 #LOGOUT
 @app.route('/logout', methods=['DELETE'])
+
 def logout():
     if session.get('user_id'):
         session['user_id'] = None
         return make_response({'message': 'Successfully Logged Out'}, 204)
     return make_response({'error'})
-
 
 class UserBooks(Resource):
     def get(self):
@@ -81,7 +77,8 @@ class UserBooks(Resource):
 
 api.add_resource(UserBooks, '/user-books')
 
-class UserBookById(Resource):  # need to add for specific user
+class UserBookById(Resource):
+    
     def get(self, id):
         user_book = db.session.get(UserBook, id)
         if user_book:
@@ -96,15 +93,19 @@ class UserBookById(Resource):  # need to add for specific user
             return make_response('', 200)
         except Exception as e:
             return make_response({'error': str(e)}, 500)
+
 api.add_resource(UserBookById, '/user-books/<int:id>')
 
 class Books(Resource):
+    
     def get(self):
         books = [b.to_dict() for b in Book.query.all()]
         return make_response(books, 200)
+
 api.add_resource(Books, '/books')
 
 class Users(Resource):
+    
     def get(self):
         users = [u.to_dict() for u in User.query.all()]
         return make_response(users, 200)
@@ -120,16 +121,18 @@ class Users(Resource):
         except Exception:
             # add specifics later
             return make_response({'errors': ['validation errors']}, 400)
+
 api.add_resource(Users, '/users')
 
 class UserById(Resource):
+    
     def get(self, id):
         user = db.session.get(User, id)
         if user:
             return make_response(user.to_dict(), 200)
         return make_response({'error': 'User not found'}, 404)
-api.add_resource(UserById, '/users/<int:id>')
 
+api.add_resource(UserById, '/users/<int:id>')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
