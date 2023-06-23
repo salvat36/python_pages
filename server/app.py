@@ -110,6 +110,21 @@ class UserById(Resource):
 api.add_resource(UserById, '/users/<int:id>')
 
 
+class Login(Resource):
+    def post(self):
+        data = request.get_json()
+        username = data.get('username')
+        password = data.get('password')
+    
+        user = User.query.filter(User.username == username).first()
+
+        if user:
+            return (user.to_dict(), 200)
+            ##!Need password here too
+        
+        return {"Error": "404 Unauthorized"}, 401
+api.add_resource(Login, '/login>')
+        
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
