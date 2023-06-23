@@ -59,7 +59,6 @@ def signup():
         return make_response(user.to_dict(), 201)
     except Exception as e:
         return make_response({'error': str(e)}, 422)
-        return make_response({'error': str(e)}, 422)
     
 #LOGOUT
 @app.route('/logout', methods=['DELETE'])
