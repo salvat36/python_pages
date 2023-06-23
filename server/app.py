@@ -36,26 +36,30 @@ def home():
     return '<h1>home page</h1>'
 
 #LOGIN
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['POST'])
 
 def login():
     data = request.get_json()
     username = data.get('username')
     password = data.get('password')
-
     user = User.query.filter(User.username == username).first()
-
     if user:
         if user.authenticate(password):
             session['user_id'] = user.id
-            return (user.to_dict(), 200)
-        return {"error": "401 Access Denied"}, 401
+            return make_response(user.to_dict(), 200)
+        return make_response({"error": "401 Access Denied"}, 401)
 
 #SIGNUP
 @app.route('/signup', methods=['POST'])
 def signup():
     data = request.get_json()
-    user = User(**data)
+    username = data.get('username')
+    password = data.get('password')
+    user = User(
+        username=username
+    )
+    user.password_hash = password
+
     try:
         db.session.add(user)
         db.session.commit()
@@ -67,7 +71,6 @@ def signup():
     
 #LOGOUT
 @app.route('/logout', methods=['DELETE'])
-
 def logout():
     if session.get('user_id'):
         session['user_id'] = None
@@ -117,10 +120,11 @@ class Users(Resource):
     def post(self):
         data = request.get_json()
         try:
-            users = User(**data)
-            db.session.add(users)
+            new_user = User(**data)
+            db.session.add(new_user)
             db.session.commit()
-            return users.to_dict(), 201
+            session['user_id'] = new_user.id
+            return make_response(new_user.to_dict(), 201)
 
         except Exception:
             # add specifics later
