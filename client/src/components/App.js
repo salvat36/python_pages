@@ -21,12 +21,20 @@ function App() {
       })
   }, []);
 
+  function handleLogoutClick() {
+    fetch('/logout', {method: 'DELETE'}).then((res) => {
+      if (res.ok) {
+        setUser(null);
+      }
+    });
+  }
+
 
 
   // if (!user) return <Login onLogin={setUser} />;
   return (
     <>
-      <Navbar user={user} setUser={setUser}/>
+      <Navbar handleLogoutClick={handleLogoutClick}/>
       <Login />
       <Switch>
         <Route exact path='/books/:id'>

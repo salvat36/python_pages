@@ -1,13 +1,6 @@
 import React from 'react'
 
-const Navbar = ( { user, setUser }) => {
-  function handleLogoutClick() {
-    fetch('/logout', {method: 'DELETE'}).then((res) => {
-      if (res.ok) {
-        setUser(null);
-      }
-    });
-  }
+const Navbar = ( { handleLogoutClick }) => {
 
 
   return (
