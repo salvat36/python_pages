@@ -3,7 +3,6 @@ import { Switch, Route, useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 import Home from "./Home";
 import Collection from "./Collection";
-import Login from "./LoginForm";
 import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
 
@@ -67,9 +66,9 @@ function App() {
 
 
 
-if (!user) {
-  return isLoggedIn ? <LoginForm onLogin={setUser} handleLoginClick={handleLoginClick} /> : <SignupForm onSignup={setUser} handleLoginClick={handleLoginClick}/>
-}
+// if (!user) {
+//   return isLoggedIn ? <LoginForm onLogin={setUser} handleLoginClick={handleLoginClick} /> : <SignupForm onSignup={setUser} handleLoginClick={handleLoginClick}/>
+// }
 
 
   return (

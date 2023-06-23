@@ -4,7 +4,7 @@ const Navbar = ( { handleLogoutClick, handleLoginClick, isLoggedIn }) => {
 
   return (
     <div className="navbar">
-      {isLoggedIn ? (
+      {!isLoggedIn ? (
         <>
           <button onClick={handleLogoutClick}>Logout</button>
           <button>Bookcase</button>

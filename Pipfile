@@ -12,6 +12,7 @@ flask-restful = "*"
 flask-cors = "*"
 faker = "*"
 ipdb = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
