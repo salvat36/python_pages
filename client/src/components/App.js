@@ -9,7 +9,7 @@ function App() {
 
   const [books, setBooks] = useState([])
   const [user, setUser] = useState(null);
-  const [login, setLogin] = useState(true)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [error, setError] = useState(null)
   const {bookId} = useParams()
 
@@ -24,7 +24,7 @@ function App() {
 
   // Get 1 book
   useEffect(()=>{
-    fetch(`/book/${bookId}`)
+    fetch(`/books/${bookId}`)
     .then(res => {
       if (res.ok) {
         res.json().then(setBooks)
@@ -49,6 +49,7 @@ function App() {
       })
   }, []);
 
+  
   function handleLogoutClick() {
     fetch('/logout', {method: 'DELETE'})
     .then((res) => {
@@ -58,13 +59,17 @@ function App() {
     });
   }
 
+  function handleLoginClick() {
+    setIsLoggedIn(current => !isLoggedIn)
+  }
 
 
-  if (!user) return <Login onLogin={setUser} />;
+
+  // if (!user) return <Login onLogin={setUser} />;
 
   return (
     <>
-      <Navbar handleLogoutClick={handleLogoutClick}/>
+      <Navbar handleLogoutClick={handleLogoutClick} handleLoginClick={handleLoginClick}/>
       <Switch>
         <Route exact path='/books/:id'>
           <Collection />
