@@ -9,11 +9,13 @@ import os
 from os import environ
 from dotenv import load_dotenv
 from flask_restful import Resource, Api
+from flask_bcrypt import Bcrypt
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 DATABASE = os.environ.get("DB_URI", f"sqlite:///{os.path.join(BASE_DIR, 'instance/app.db')}")
 
 app = Flask(__name__)
+bcrypt = Bcrypt(app)
 
 load_dotenv('.env')
 app.secret_key = environ.get('SECRET_KEY')

@@ -13,6 +13,7 @@ flask-cors = "*"
 faker = "*"
 ipdb = "*"
 python-dotenv = "*"
+flask-bcrypt = "*"
 
 [dev-packages]
 
