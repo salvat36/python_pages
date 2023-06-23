@@ -13,8 +13,8 @@ const Navbar = ( { handleLogoutClick, handleLoginClick, isLoggedIn }) => {
         </>
       ) : (
         <>
-        <button>Login</button>
-        <button>Contact Us</button>
+          <button onClick={handleLoginClick}>Login</button>
+          <button>Contact Us</button>
         </>
       )}
     </div>

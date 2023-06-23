@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-const Signup = ({ onLogin }) => {
+const SignupForm = ({ onLogin }) => {
   const signupSchema = yup.object().shape({
     username: yup
       .string()
@@ -69,4 +69,4 @@ const Signup = ({ onLogin }) => {
     </div>
   );
 };
-export default Signup;
+export default SignupForm;

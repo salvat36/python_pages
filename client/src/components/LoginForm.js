@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-const Login = ({ onLogin }) => {
+const LoginForm = ({ onLogin, handleLoginClick }) => {
   const loginSchema = yup.object().shape({
     username: yup
       .string()
@@ -19,7 +19,7 @@ const Login = ({ onLogin }) => {
     validationSchema: loginSchema,
     onSubmit: (values, { setErrors, setSubmitting }) => {
       setSubmitting(true);
-      fetch("/signup", {
+      fetch("/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -65,7 +65,8 @@ const Login = ({ onLogin }) => {
 
         <button type="submit">Login</button>
       </form>
+      <button onClick={handleLoginClick}> No Account?  Sign up Now!</button>
     </div>
   );
 };
-export default Login;
+export default LoginForm;

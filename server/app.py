@@ -13,6 +13,8 @@ DATABASE = os.environ.get("DB_URI", f"sqlite:///{os.path.join(BASE_DIR, 'instanc
 
 app = Flask(__name__)
 
+app.secret_key = 'supersecretkey'
+
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
@@ -47,10 +49,10 @@ def login():
         if user.authenticate(password):
             session['user_id'] = user.id
             return (user.to_dict(), 200)
-        return {"Error": "401 Access Denied"}, 401
+        return {"error": "401 Access Denied"}, 401
 
 #SIGNUP
-@app.route('/signup', methods=['GET', 'POST'])
+@app.route('/signup', methods=['POST'])
 def signup():
     data = request.get_json()
     user = User(**data)
@@ -58,9 +60,10 @@ def signup():
         db.session.add(user)
         db.session.commit()
         session['user_id'] = user.id
+        import ipdb; ipdb.set_trace()
         return make_response(user.to_dict(), 201)
     except Exception as e:
-        return make_response({'Error': 'str(e)'}, 422)
+        return make_response({'error': str(e)}, 422)
     
 #LOGOUT
 @app.route('/logout', methods=['DELETE'])
