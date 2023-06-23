@@ -20,10 +20,30 @@ const Signup = () => {
         password: '',
       },
       validationSchema: signupSchema,
-      onSubmit: ( values ) => {
-        alert(JSON.stringify(values));
+      onSubmit: ( values, {setErrors, setSubmitting} ) => {
+        setSubmitting(true);
+        fetch('/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        body: JSON.stringify(values),
+        })
+        .then((res) => {
+          setSubmitting(false);
+          if (res.ok) {
+            res.json().then((user) => onLogin(user))
+          } else {
+            res.json().then((err) => setErrors(err.errors))
+        }
+      })
+        .catch((error) => {
+          setSubmitting(false);
+          console.error(error);
+        });
       },
   });
+  
   return (
       <div>
           <h1>Signup</h1>
