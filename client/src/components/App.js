@@ -23,8 +23,8 @@ function App() {
   // if (!user) return <Login onLogin={setUser} />;
   return (
     <>
+      <Navbar user={user} setUser={setUser}/>
       <Login />
-      <Navbar />
       <Switch>
         <Route exact path='/books/:id'>
           <Collection />
