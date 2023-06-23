@@ -6,9 +6,9 @@ const Login = ({ onLogin }) => {
     username: yup
       .string()
       .required("Must Enter Username")
-      .min(8, "Too Short!")
-      .max(18, "Too Long!"),
-    password: yup.string().required("Must Enter a Password").min(8).max(20),
+      .min(5, "Too Short!")
+      .max(20, "Too Long!"),
+    password: yup.string().required("Must Enter a Password").min(5).max(20),
   });
 
   const formik = useFormik({
