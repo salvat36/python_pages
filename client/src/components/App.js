@@ -6,6 +6,21 @@ import Collection from "./Collection";
 import Login from "./Login";
 
 function App() {
+
+  const [user, setUser] = useState(null);
+
+  useEffect(()=> {
+    fetch('/check_session')
+    .then((res) => {
+      if (res.ok) {
+        res.json().then(setUser);
+      } else {
+        Error(res.status);
+      }
+      })
+  }, []);
+
+  // if (!user) return <Login onLogin={setUser} />;
   return (
     <>
       <Login />
