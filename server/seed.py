@@ -11,8 +11,6 @@ from flask import Flask
 from app import app
 from models import UserBook, Book, User, db
 
-
-
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 
@@ -39,8 +37,6 @@ def create_books():
         )
         books.append(book)
     return books
-
-    
 
 def create_users():
     users = []
@@ -77,13 +73,10 @@ if __name__ == '__main__':
         db.session.add_all(books)
         db.session.commit()
 
-
-
         print("Shelving Users")
         users = create_users()
         db.session.add_all(users)
         db.session.commit()
-
 
         print("Shelving UserBooks...")
         userbooks = create_user_books(books, users)

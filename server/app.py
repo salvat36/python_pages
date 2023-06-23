@@ -8,7 +8,6 @@ from models import User, UserBook, Book, db
 import os
 from flask_restful import Resource, Api
 
-
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 DATABASE = os.environ.get("DB_URI", f"sqlite:///{os.path.join(BASE_DIR, 'instance/app.db')}")
 
@@ -20,10 +19,9 @@ app.json.compact = False
 
 migrate = Migrate(app, db)
 
+db.init_app(app)
 
 api = Api(app)
-
-db.init_app(app)
 
 # @app.before_request
 # def create_database():
@@ -36,54 +34,13 @@ db.init_app(app)
 def home():
     return '<h1> home page</h1>'
 
-#LOGIN
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    data = request.get_json()
-    username = data.get('username')
-    password = data.get('password')
-
-    user = User.query.filter(User.username == username).first()
-
-    if user:
-        if user.authenticate(password):
-            session['user_id'] = user.id
-            return (user.to_dict(), 200)
-        return {"Error": "401 Access Denied"}, 401
-
-#SIGNUP
-@app.route('/signup', methods=['GET', 'POST'])
-def signup():
-    data = request.get_json()
-    user = User(**data)
-    try:
-        db.session.add(user)
-        db.session.commit()
-        session['user_id'] = user.id
-        return make_response(user.to_dict(), 201)
-    except Exception as e:
-        return make_response({'Error': 'str(e)'}, 422)
-    
-#LOGOUT
-@app.route('/logout', methods=['DELETE'])
-def logout():
-    if session.get('user_id'):
-        session['user_id'] = None
-        return make_response({'message': 'Successfully Logged Out'}, 204)
-    return make_response({'error'})
-
-
-
-
 
 class UserBooks(Resource):
     def get(self):
         user_books = [ub.to_dict() for ub in UserBook.query.all()]
         return make_response(user_books, 200)
 
-
 api.add_resource(UserBooks, '/user-books')
-
 
 class UserBookById(Resource):  # need to add for specific user
     def get(self, id):
@@ -100,25 +57,18 @@ class UserBookById(Resource):  # need to add for specific user
             return make_response('', 200)
         except Exception as e:
             return make_response({'error': str(e)}, 500)
-
-
 api.add_resource(UserBookById, '/user-books/<int:id>')
-
 
 class Books(Resource):
     def get(self):
         books = [b.to_dict() for b in Book.query.all()]
         return make_response(books, 200)
-
-
 api.add_resource(Books, '/books')
-
 
 class Users(Resource):
     def get(self):
         users = [u.to_dict() for u in User.query.all()]
         return make_response(users, 200)
-
 
     def post(self):
         data = request.get_json()
@@ -131,10 +81,7 @@ class Users(Resource):
         except Exception:
             # add specifics later
             return make_response({'errors': ['validation errors']}, 400)
-
-
 api.add_resource(Users, '/users')
-
 
 class UserById(Resource):
     def get(self, id):
@@ -142,8 +89,6 @@ class UserById(Resource):
         if user:
             return make_response(user.to_dict(), 200)
         return make_response({'error': 'User not found'}, 404)
-
-
 api.add_resource(UserById, '/users/<int:id>')
 
 
