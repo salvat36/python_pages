@@ -34,6 +34,42 @@ api = Api(app)
 def home():
     return '<h1> home page</h1>'
 
+#LOGIN
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    data = request.get_json()
+    username = data.get('username')
+    password = data.get('password')
+
+    user = User.query.filter(User.username == username).first()
+
+    if user:
+        if user.authenticate(password):
+            session['user_id'] = user.id
+            return (user.to_dict(), 200)
+        return {"Error": "401 Access Denied"}, 401
+
+#SIGNUP
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    data = request.get_json()
+    user = User(**data)
+    try:
+        db.session.add(user)
+        db.session.commit()
+        session['user_id'] = user.id
+        return make_response(user.to_dict(), 201)
+    except Exception as e:
+        return make_response({'Error': 'str(e)'}, 422)
+    
+#LOGOUT
+@app.route('/logout', methods=['DELETE'])
+def logout():
+    if session.get('user_id'):
+        session['user_id'] = None
+        return make_response({'message': 'Successfully Logged Out'}, 204)
+    return make_response({'error'})
+
 
 class UserBooks(Resource):
     def get(self):
