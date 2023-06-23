@@ -37,7 +37,6 @@ def home():
 
 #LOGIN
 @app.route('/login', methods=['POST'])
-
 def login():
     data = request.get_json()
     username = data.get('username')
@@ -47,7 +46,14 @@ def login():
         if user.authenticate(password):
             session['user_id'] = user.id
             return make_response(user.to_dict(), 200)
-        return make_response({"error": "401 Access Denied"}, 401)
+        return make_response({'error': '401 Access Denied'}, 401)
+    
+@app.route('/authenticate', methods=['GET'])
+def get(self):
+    user = User.query.filter_by(id=session.get('user_id'))
+    if user:
+        return make_response(user.to_dict(), 200)
+    make_response({'error': 'Unauthorized' }, 401)
 
 #SIGNUP
 @app.route('/signup', methods=['POST'])

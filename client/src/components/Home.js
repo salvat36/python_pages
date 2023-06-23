@@ -5,7 +5,7 @@ const Home = () => {
     <>
     <h1>Library</h1>
     <div>
-    <Library/>
+      <Library/>
     </div>
     </>
   )

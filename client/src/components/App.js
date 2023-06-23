@@ -1,18 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { Switch, Route, useParams } from "react-router-dom";
+import { Switch, Route, useParams, useHistory } from "react-router-dom";
 import Navbar from "./Navbar";
 import Home from "./Home";
 import Collection from "./Collection";
 import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
+import Authentication from "./Authentication";
 
 function App() {
 
-  const [books, setBooks] = useState([])
   const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+
   const [error, setError] = useState(null)
+  const [books, setBooks] = useState([])
   const {bookId} = useParams()
+  const history = useHistory()
+
+  const updateUser = () => { 
+    setUser(current => !current)
+  }
+
+  const toggleIsLoggedIn = () => {
+    setIsLoggedIn(isLoggedIn => !isLoggedIn)
+  }
+
 
 
   // Get all Books
@@ -55,7 +67,8 @@ function App() {
     fetch('/logout', {method: 'DELETE'})
     .then((res) => {
       if (res.ok) {
-        setUser(null);
+        updateUser(null)
+        history.push('/authentication')
       }
     });
   }
@@ -66,11 +79,12 @@ function App() {
 
 
 
-// if (!user) {
-//   return isLoggedIn ? <LoginForm onLogin={setUser} handleLoginClick={handleLoginClick} /> : <SignupForm onSignup={setUser} handleLoginClick={handleLoginClick}/>
-// }
-
-
+if (!user) 
+  return (
+  <>
+    <Authentication updateUser={updateUser}/>
+  </>
+)
   return (
     <>
       <Navbar handleLogoutClick={handleLogoutClick} handleLoginClick={handleLoginClick}/>
