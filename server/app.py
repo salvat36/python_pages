@@ -50,7 +50,7 @@ def login():
     
 @app.route('/authenticate', methods=['GET'])
 def get(self):
-    user = User.query.filter_by(id=session.get('user_id'))
+    user = User.query.filter_by(id=session.get('user_id')).first()
     if user:
         return make_response(user.to_dict(), 200)
     make_response({'error': 'Unauthorized' }, 401)

@@ -48,11 +48,11 @@ class Book(db.Model, SerializerMixin):
     serialize_only = ('id', 'title', 'author', 'genre', 'page_count')
     serialize_rules = ()
     
-    @validates('title')
-    def validates_title(self, key, title):
-        if type(title) not in [str] or not (2 <= len(title) <= 20):
-            raise ValueError('Title must be a string between 2 and 20 characters')
-        return title
+    # @validates('title')
+    # def validates_title(self, key, title):
+    #     if type(title) not in [str] or not (2 <= len(title) <= 20):
+    #         raise ValueError('Title must be a string between 2 and 20 characters')
+    #     return title
     
     # @validates('author')
     # def validates_author(self, key, author):
@@ -60,16 +60,16 @@ class Book(db.Model, SerializerMixin):
     #         raise ValueError('Author must be a string between 2 and 20 characters')
     #     return author
     
-    @validates('genre')
-    def validates_genre(self, key, genre):
-        if type(genre) not in [str] or not (2 <= len(genre) <= 20):
-            raise ValueError('Genre must be a string between 2 and 20 characters')
-        return genre
+    # @validates('genre')
+    # def validates_genre(self, key, genre):
+    #     if type(genre) not in [str] or not (2 <= len(genre) <= 20):
+    #         raise ValueError('Genre must be a string between 2 and 20 characters')
+    #     return genre
     
-    @validates('page_count')
-    def validates_page_count(self, key, page_count):
-        if type(page_count) not in [int] or not 100 <= page_count <= 1000:
-            raise ValueError('Page count must be between 100 and 1000 pages')
+    # @validates('page_count')
+    # def validates_page_count(self, key, page_count):
+    #     if type(page_count) not in [int] or not 100 <= page_count <= 1000:
+    #         raise ValueError('Page count must be between 100 and 1000 pages')
     
     def __repr__(self):
         return f'Book {self.title}, {self.author}, {self.genre}'
@@ -79,8 +79,8 @@ class User(db.Model, SerializerMixin):
     
     id = db.Column(db.Integer, primary_key=True)
     
-    username = db.Column(db.String(30), unique=True)
-    password = db.Column(db.String(30))
+    username = db.Column(db.String, unique=True)
+    password = db.Column(db.String)
     # email might be added later
     _password_hash = db.Column(db.String)
     admin = db.Column(db.String, default=False)
