@@ -1,31 +1,15 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 
-const BookCard = () => {
-const {bookId} = useParams()
-const [book, setBook] = useState([])
+const BookCard = ( {author, genre, page_count, title, id} ) => {
+
 const [error, setError] = useState(null)
 
-  useEffect(()=>{
-    fetch(`/books/${bookId}`)
-    .then(res => {
-        if (res.ok) {
-            res.json().then(setBook)
-          } else {
-              res.json().then(e => setError(e.message))
-            }
-        })
-  .catch(console.error)
-},[bookId])
 
   return (
     <div>
-    <h3>Book</h3>
-    <p>Title</p>
-    <p></p>
-
-
+      <Link to={`/books/${id}`}>Title: {title} Author: {author}</Link>
     </div>
     // ! RENDER INDIVIDUAL BOOKS HERE //
   )

@@ -39,9 +39,9 @@ const NavBar = ( {updateUser, user, handleLogoutClick}) => {
   )}
       <Menu.Item 
         as={NavLink}
-        to="/library"
+        to="/user-books"
         name='Your Library'
-        active={active === 'library'}
+        active={active === 'user-books'}
         onClick={handleClick}
       />
       <Menu.Item 
@@ -65,27 +65,3 @@ const NavBar = ( {updateUser, user, handleLogoutClick}) => {
 
 export default NavBar;
 //* <button onCLick={handleClick}>{signUp ? 'Log In!' : 'Register now!'}</button> */
-// import React from 'react'
-
-// const Navbar = ( { handleLogoutClick, handleLoginClick, isLoggedIn}) => {
-
-//   return (
-//     <div className="navbar">
-//       {!isLoggedIn ? (
-//         <>
-//           <button onClick={handleLogoutClick}>Logout</button>
-//           <button>Bookcase</button>
-//           <button>Books</button>
-//           <button>Contact Us</button>
-//         </>
-//       ) : (
-//         <>
-//           <button onClick={handleLoginClick}>Login</button>
-//           <button>Contact Us</button>
-//         </>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default Navbar

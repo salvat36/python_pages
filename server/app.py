@@ -25,12 +25,12 @@ def login():
     except Exception as e:
         return make_response({'error': str(e)}, 401)
     
-@app.route('/authenticate', methods=['POST'])
+@app.route('/authenticate', methods=['GET'])
 def get():
     # user = User.query.filter_by(id=session.get('user_id')).first()
-    if session.get('user_id'):
+    if session.get('user_id') and db.session.get(User, session['user_id']):
         return make_response(db.session.get(User, session['user_id']).to_dict(), 200)
-    make_response({'error': 'Unauthorized' }, 401)
+    return make_response({'error': 'Unauthorized' }, 401)
 
 #SIGNUP
 @app.route('/signup', methods=['POST'])
@@ -60,8 +60,24 @@ def logout():
 
 class UserBooks(Resource):
     def get(self):
+        # user_books = [ub.to_dict() for ub in UserBook.query.filter(session.get('user_id')).all()]
         user_books = [ub.to_dict() for ub in UserBook.query.all()]
         return make_response(user_books, 200)
+    
+    def post(self):
+        if 'user_id' in session:
+            try:
+                # import ipdb; ipdb.set_trace()
+                new_user_book = UserBook(
+                    user_id = session['user_id'],
+                    book_id = request.get_json()['id']
+                )
+                db.session.add(new_user_book)
+                db.session.commit()
+                return make_response('', 200)
+            except Exception as e:
+                return make_response({'error': str(e)}, 400)
+        return make_response({'error': 'Unauthorized' }, 401)
 
 api.add_resource(UserBooks, '/user-books')
 
@@ -73,16 +89,22 @@ class UserBookById(Resource):
         if user_book:
             return make_response(user_book.to_dict(), 200)
         return make_response({'error': 'user_book must have a valid user and valid book '}, 404)
+    
+
 
     def delete(self, id):
+        if 'user_id' not in session:
+            return make_response({'error': 'Unauthorized' }, 401)
         try:
-            user_book = UserBook.query.get(id)
+            user_book = UserBook.query.filter_by(user_id = session.get('user_id'), book_id = id).first()
+            if not user_book:
+                return make_response({'error': 'Cannot find that book in your library'}, 404)
+            # import ipdb; ipdb.set_trace()
             db.session.delete(user_book)
             db.session.commit()
-            return make_response('', 200)
+            return make_response('', 204)
         except Exception as e:
-            return make_response({'error': str(e)}, 500)
-
+            return make_response({'error': str(e)}, 422)
 api.add_resource(UserBookById, '/user-books/<int:id>')
 
 class Books(Resource):
@@ -92,6 +114,16 @@ class Books(Resource):
         return make_response(books, 200)
 
 api.add_resource(Books, '/books')
+
+class BookById(Resource):
+    
+    def get(self, id):
+        book = db.session.get(Book, id)
+        if book:
+            return make_response(book.to_dict(), 200)
+        return make_response({'error': 'book not found'}, 404)
+
+api.add_resource(BookById, '/books/<int:id>')
 
 class Users(Resource):
     
@@ -113,16 +145,6 @@ class Users(Resource):
             return make_response({'errors': ['validation errors']}, 400)
 
 api.add_resource(Users, '/users')
-
-class UserById(Resource):
-    
-    def get(self, id):
-        user = db.session.get(User, id)
-        if user:
-            return make_response(user.to_dict(), 200)
-        return make_response({'error': 'User not found'}, 404)
-
-api.add_resource(UserById, '/users/<int:id>')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
