@@ -7,16 +7,20 @@ import { Form, Button, Message } from 'semantic-ui-react';
 const Authentication = ( { updateUser } ) => {
     const [signUp, setSignUp] = useState(false)
     const history = useHistory()
+    const [errors, setErrors] = useState([])
 
     const handleClick = () => setSignUp((signUp) => !signUp)
 
     const formSchema = yup.object().shape({
         username: yup
           .string()
-          .required("Must Enter Username")
+          .required("Username Required")
           .min(5, "Too Short!")
           .max(80, "Too Long!"),
-        password: yup.string().required("Must Enter a Password").min(5).max(80),
+        password: yup.string()
+          .required("Password Required")
+          .min(5)
+          .max(80),
       });
     
       const formik = useFormik({
@@ -25,8 +29,7 @@ const Authentication = ( { updateUser } ) => {
           password: "",
         },
         validationSchema: formSchema,
-        onSubmit: (values, { setErrors, setSubmitting, resetForm }) => {
-          setSubmitting(true);
+        onSubmit: (values, { resetForm }) => {
           fetch(signUp? '/signup' : '/login', {
             method: "POST",
             headers: {
@@ -35,27 +38,23 @@ const Authentication = ( { updateUser } ) => {
             body: JSON.stringify(values),
           })
             .then((res) => {
-              setSubmitting(false);
               if (res.ok) {
                 res.json().then((res) => {
                     updateUser(res)
-                    resetForm({values: ''})
+                    resetForm()
                     history.push('/')
                 }
                 )} else {
-                res.json().then((err) => setErrors(err.errors));
+                res.json().then((error) => setErrors(error.message));
               }
             })
-            .catch((error) => {
-              setSubmitting(false);
-              console.error(error);
-            });
+            .catch((error) => console.log(error));
         },
       });
       return (
         <div>
           <h1>Please Login or Signup!</h1>
-          <h2>{signUp? 'Already a User?' : 'Not a User?'} </h2>
+          <h2>{signUp? 'Create an Account Below: ' : 'Login Below: '} </h2>
           <Form onSubmit={formik.handleSubmit}>
             <Form.Field>
             <label htmlFor="username">Username: </label>
@@ -84,7 +83,7 @@ const Authentication = ( { updateUser } ) => {
     
             <Button type="submit">Login</Button>
           </Form>
-          <Button onClick={handleClick}>{signUp? 'Please Login here' :  'Create an Account!'}</Button>
+          <Button onClick={handleClick}>{signUp? 'Login here!' :  'Create an Account!'}</Button>
         </div>
       );
     };
