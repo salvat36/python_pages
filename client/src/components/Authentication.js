@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Switch, Route, useParams, useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { Form, Button, Message } from 'semantic-ui-react';
 
 const Authentication = ( { updateUser } ) => {
     const [signUp, setSignUp] = useState(false)
@@ -25,7 +26,7 @@ const Authentication = ( { updateUser } ) => {
           password: "",
         },
         validationSchema: formSchema,
-        onSubmit: (values, { setErrors, setSubmitting }) => {
+        onSubmit: (values, { setErrors, setSubmitting, resetForm }) => {
           setSubmitting(true);
           fetch(signUp? '/signup' : '/login', {
             method: "POST",
@@ -39,6 +40,7 @@ const Authentication = ( { updateUser } ) => {
               if (res.ok) {
                 res.json().then((res) => {
                     updateUser(res)
+                    formik.resetForm()
                     history.push('/')
                 }
                 )} else {
@@ -55,7 +57,8 @@ const Authentication = ( { updateUser } ) => {
         <div>
           <h1>Please Login or Signup!</h1>
           <h2>{signUp? 'Already a User?' : 'Not a User?'} </h2>
-          <form onSubmit={formik.handleSubmit}>
+          <Form onSubmit={formik.handleSubmit}>
+            <Form.Field>
             <label htmlFor="username">Username: </label>
             <input
               type="text"
@@ -64,8 +67,10 @@ const Authentication = ( { updateUser } ) => {
               onChange={formik.handleChange}
             />
             {formik.errors.username && formik.touched.username ? (
-              <div>{formik.errors.username}</div>
+              <Message error content ={formik.errors.username}/>
             ) : null}
+            </Form.Field>
+            <Form.Field>
             <label htmlFor="password">Password: </label>
             <input
               type="password"
@@ -74,12 +79,13 @@ const Authentication = ( { updateUser } ) => {
               onChange={formik.handleChange}
             />
             {formik.errors.password && formik.touched.password ? (
-              <div>{formik.errors.password}</div>
+              <Message error content ={formik.errors.username}/>
             ) : null}
+            </Form.Field>
     
-            <button type="submit">Login</button>
-          </form>
-          <button onClick={handleClick}>{signUp? 'Please Login here' :  'Create an Account!'}</button>
+            <Button type="suBmit">Login</Button>
+          </Form>
+          <Button onClick={handleClick}>{signUp? 'Please Login here' :  'Create an Account!'}</Button>
         </div>
       );
     };
