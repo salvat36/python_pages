@@ -4,11 +4,7 @@ from sqlalchemy.orm import validates
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy_serializer import SerializerMixin
-from flask_bcrypt import Bcrypt
-
-metadata = MetaData(naming_convention={"fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",})
-
-db = SQLAlchemy(metadata=metadata)
+from config import bcrypt, db, metadata
 
 class UserBook(db.Model, SerializerMixin):
     __tablename__ = 'user_books'
@@ -80,10 +76,9 @@ class User(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     
     username = db.Column(db.String, unique=True)
-    password = db.Column(db.String)
     # email might be added later
     _password_hash = db.Column(db.String)
-    admin = db.Column(db.String, default=False)
+    # admin = db.Column(db.String, default=False)
 
     @hybrid_property
     def password_hash(self):

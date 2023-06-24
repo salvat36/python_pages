@@ -43,7 +43,7 @@ def create_users():
     for _ in range(100):
         user = User(
             username = fake.user_name(),
-            password = fake.password(length=8),
+            password_hash = fake.password(length=8),
             created_at = fake.date_time(),
             updated_at = fake.date_time()
         )

@@ -5,30 +5,9 @@ from flask import Flask, request, jsonify, make_response, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from models import User, UserBook, Book, db
-import os
-from os import environ
-from dotenv import load_dotenv
-from flask_restful import Resource, Api
-from flask_bcrypt import Bcrypt
+from config import app, api
+from flask_restful import Resource
 
-BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-DATABASE = os.environ.get("DB_URI", f"sqlite:///{os.path.join(BASE_DIR, 'instance/app.db')}")
-
-app = Flask(__name__)
-bcrypt = Bcrypt(app)
-
-load_dotenv('.env')
-app.secret_key = environ.get('SECRET_KEY')
-
-app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.json.compact = False
-
-migrate = Migrate(app, db)
-
-db.init_app(app)
-
-api = Api(app)
 
 #HOME
 @app.route('/')
@@ -38,21 +17,19 @@ def home():
 #LOGIN
 @app.route('/login', methods=['POST'])
 def login():
-    data = request.get_json()
-    username = data.get('username')
-    password = data.get('password')
-    user = User.query.filter(User.username == username).first()
-    if user:
-        if user.authenticate(password):
+    try:
+        user = User.query.filter_by(username=request.get_json().get('username')).first()
+        if user.authenticate(request.get_json().get('password')):
             session['user_id'] = user.id
             return make_response(user.to_dict(), 200)
-        return make_response({'error': '401 Access Denied'}, 401)
+    except Exception as e:
+        return make_response({'error': str(e)}, 401)
     
-@app.route('/authenticate', methods=['GET'])
-def get(self):
-    user = User.query.filter_by(id=session.get('user_id')).first()
-    if user:
-        return make_response(user.to_dict(), 200)
+@app.route('/authenticate', methods=['POST'])
+def get():
+    # user = User.query.filter_by(id=session.get('user_id')).first()
+    if session.get('user_id'):
+        return make_response(db.session.get(User, session['user_id']).to_dict(), 200)
     make_response({'error': 'Unauthorized' }, 401)
 
 #SIGNUP
@@ -60,17 +37,15 @@ def get(self):
 def signup():
     data = request.get_json()
     username = data.get('username')
-    password = data.get('password')
     user = User(
-        username=username
+        username=username,
+        password_hash =data.get('password')
     )
-    user.password_hash = password
 
     try:
         db.session.add(user)
         db.session.commit()
         session['user_id'] = user.id
-        import ipdb; ipdb.set_trace()
         return make_response(user.to_dict(), 201)
     except Exception as e:
         return make_response({'error': str(e)}, 422)
@@ -94,8 +69,9 @@ class UserBookById(Resource):
     
     def get(self, id):
         user_book = db.session.get(UserBook, id)
+        print(id)
         if user_book:
-            return make_response(user_book, 200)
+            return make_response(user_book.to_dict(), 200)
         return make_response({'error': 'user_book must have a valid user and valid book '}, 404)
 
     def delete(self, id):
