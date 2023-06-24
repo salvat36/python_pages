@@ -1,14 +1,28 @@
-import React from 'react'
-import { useState } from 'react'
-
-// !# Create form for user input to search by book or reader?
-// !# handleChange - collect user input
-// !# handleSubmit - provide proper filtered
-
+import React, { useState } from 'react'
+import { Input } from 'semantic-ui-react'
 
 const Search = () => {
-  return (
-    <div>Search</div>
+  
+  const handleChange = (e) => {
+      onSearch(e.target.value)
+  }
+  
+  const [searchBook, setSearchBook] = useState('')
+
+  const onSearch = (input) => {
+    setSearchBook(input)
+  }
+
+  return(
+      <div id="search-container">
+          <Input
+          value={searchBook}
+          type='text'
+          id='search'
+          placeholder='Search for a book!'
+          onChange={handleChange}
+          />
+      </div>
   )
 }
 
