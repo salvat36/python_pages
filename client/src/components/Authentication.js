@@ -3,7 +3,7 @@ import { Switch, Route, useParams, useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-const Authentication = ( { setUser }) => {
+const Authentication = ( { updateUser } ) => {
     const [signUp, setSignUp] = useState(false)
     const history = useHistory()
 
@@ -27,7 +27,7 @@ const Authentication = ( { setUser }) => {
         validationSchema: formSchema,
         onSubmit: (values, { setErrors, setSubmitting }) => {
           setSubmitting(true);
-          fetch(signUp? '/users' : '/login', {
+          fetch(signUp? '/signup' : '/login', {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -37,8 +37,8 @@ const Authentication = ( { setUser }) => {
             .then((res) => {
               setSubmitting(false);
               if (res.ok) {
-                res.json().then((user) => {
-                    setUser(user)
+                res.json().then((res) => {
+                    updateUser(res)
                     history.push('/')
                 }
                 )} else {

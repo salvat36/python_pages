@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { Switch, Route, useParams, useHistory } from "react-router-dom";
-import Navbar from "./Navbar";
-import Home from "./Home";
-import Collection from "./Collection";
-import LoginForm from "./LoginForm";
-import SignupForm from "./SignupForm";
-import Authentication from "./Authentication";
+import React, { useEffect, useState } from 'react';
+import { Switch, Route, useParams, useHistory } from 'react-router-dom';
+import Navbar from './NavBar';
+import Home from './Home';
+import Collection from './Collection';
+import LoginForm from './LoginForm';
+import SignupForm from './SignupForm';
+import Authentication from './Authentication';
+import Book from './Book';
+import Header from './Header'
+import '../App.css';
 
 function App() {
 
   const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false)
-
-  const [error, setError] = useState(null)
-  const [books, setBooks] = useState([])
-  const {bookId} = useParams()
   const history = useHistory()
+  const [books, setBooks] = useState([])
 
   const updateUser = () => { 
     setUser(current => !current)
@@ -25,8 +25,8 @@ function App() {
     setIsLoggedIn(isLoggedIn => !isLoggedIn)
   }
 
-
-
+  
+  
   // Get all Books
   useEffect(()=>{
     fetch('/books')
@@ -34,34 +34,25 @@ function App() {
     .then(setBooks)
     .catch(err => console.log(err))
   }, [])
-
-  // Get 1 book
-  useEffect(()=>{
-    fetch(`/books/${bookId}`)
-    .then(res => {
-      if (res.ok) {
-        res.json().then(setBooks)
-      } else {
-        res.json().then(e => setError(e.message))
-      }
-  })
-    .catch(console.error)
-  },[bookId])
+  
 
 
-
-
+  
   useEffect(()=> {
-    fetch('/check_session')
-    .then((res) => {
-      if (res.ok) {
-        res.json().then(setUser);
-      } else {
-        Error(res.status);
-      }
+    const fetchUser = () => {
+      fetch('/authenticate', {method: 'POST'})
+      .then((res) => {
+        if (res.ok) {
+          res.json()
+      .then(updateUser(res));
+        } else {
+          setUser(null);
+        }
       })
-  }, []);
-
+    }
+    fetchUser()
+  }, [])
+  
   
   function handleLogoutClick() {
     fetch('/logout', {method: 'DELETE'})
@@ -72,24 +63,29 @@ function App() {
       }
     });
   }
-
+  
   function handleLoginClick() {
     setIsLoggedIn(current => !isLoggedIn)
   }
 
 
 
-if (!user) 
-  return (
-  <>
-    <Authentication updateUser={updateUser}/>
-  </>
-)
+if (!user)  {
   return (
     <>
-      <Navbar handleLogoutClick={handleLogoutClick} handleLoginClick={handleLoginClick}/>
+      <Navbar/>
+      <Authentication updateUser={updateUser}/>
+    </>
+  );
+}
+
+
+  return (
+    <>
+    <Header handleLogoutClick={handleLogoutClick} user={user}/>
+      {/* <Navbar handleLogoutClick={handleLogoutClick} handleLoginClick={handleLoginClick} user={user}/> */}
       <Switch>
-        <Route exact path='/books/:id'>
+        <Route exact path='/books'>
           <Collection />
         </Route>
         <Route>
