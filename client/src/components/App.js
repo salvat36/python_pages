@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Switch, Route, useParams, useHistory } from 'react-router-dom';
 import Navbar from './NavBar';
-import Home from './Home';
-import Collection from './Collection';
+import AllBooks from './AllBooks';
 import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
 import Authentication from './Authentication';
-import Book from './Book';
+import Book from './BookCard';
 import Header from './Header'
 import '../App.css';
 
@@ -86,10 +85,7 @@ if (!user)  {
       {/* <Navbar handleLogoutClick={handleLogoutClick} handleLoginClick={handleLoginClick} user={user}/> */}
       <Switch>
         <Route exact path='/books'>
-          <Collection />
-        </Route>
-        <Route>
-          <Home />
+          <AllBooks />
         </Route>
       </Switch>
     </>

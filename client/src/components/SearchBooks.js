@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Input } from 'semantic-ui-react'
 
-const Search = () => {
+const SearchBooks = () => {
   
   const handleChange = (e) => {
       onSearch(e.target.value)
@@ -26,4 +26,4 @@ const Search = () => {
   )
 }
 
-export default Search
+export default SearchBooks

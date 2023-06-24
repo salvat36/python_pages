@@ -2,7 +2,7 @@ import React from 'react'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
-const Book = () => {
+const BookCard = () => {
 const {bookId} = useParams()
 const [book, setBook] = useState([])
 const [error, setError] = useState(null)
@@ -23,7 +23,6 @@ const [error, setError] = useState(null)
     <div>
     <h3>Book</h3>
     <p>Title</p>
-    <p>Spine IMG HERE</p>
     <p></p>
 
 
@@ -32,4 +31,4 @@ const [error, setError] = useState(null)
   )
 }
 
-export default Book
+export default BookCard
