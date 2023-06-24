@@ -41,10 +41,7 @@ function App() {
     ))  
   }
 
-  const toggleIsLoggedIn = () => {
-    setIsLoggedIn(isLoggedIn => !isLoggedIn)
-  }
-  
+
 
 
   
@@ -74,12 +71,6 @@ function App() {
     });
   }
   
-  function handleLoginClick() {
-    setIsLoggedIn(current => !isLoggedIn)
-  }
-
-
-
 if (!user)  {
   return (
     <>
@@ -93,7 +84,6 @@ if (!user)  {
   return (
     <>
     <Header handleLogoutClick={handleLogoutClick} user={user}/>
-      {/* <Navbar handleLogoutClick={handleLogoutClick} handleLoginClick={handleLoginClick} user={user}/> */}
       <Switch>
         <Route exact path='/books'>
           <AllBooks />

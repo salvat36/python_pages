@@ -6,12 +6,12 @@ import { Link } from 'react-router-dom'
 const Header = ( {user, handleLogoutClick}) => {
 
     return(
-        <div>
+        <header>
             <Link to='/'>
                 <SemanticHeader id='title'>Python Pages</SemanticHeader>
             </Link>
             <NavBar handleLogoutClick={handleLogoutClick} user={user} />
-        </div> 
+        </header> 
     )
 }
 

@@ -56,6 +56,7 @@ const Authentication = ( { updateUser } ) => {
           <h1>Please Login or Signup!</h1>
           <h2>{signUp? 'Already a User?' : 'Not a User?'} </h2>
           <form onSubmit={formik.handleSubmit}>
+            <label htmlFor="username">Username: </label>
             <input
               type="text"
               name="username"
@@ -65,8 +66,9 @@ const Authentication = ( { updateUser } ) => {
             {formik.errors.username && formik.touched.username ? (
               <div>{formik.errors.username}</div>
             ) : null}
+            <label htmlFor="password">Password: </label>
             <input
-              type="text"
+              type="password"
               name="password"
               value={formik.values.password}
               onChange={formik.handleChange}
@@ -77,7 +79,7 @@ const Authentication = ( { updateUser } ) => {
     
             <button type="submit">Login</button>
           </form>
-          <button onClick={handleClick}>{signUp? 'Log in here!' :  'Register Now!'}</button>
+          <button onClick={handleClick}>{signUp? 'Please Login here' :  'Create an Account!'}</button>
         </div>
       );
     };
