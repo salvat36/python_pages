@@ -40,7 +40,7 @@ const Authentication = ( { updateUser } ) => {
               if (res.ok) {
                 res.json().then((res) => {
                     updateUser(res)
-                    formik.resetForm()
+                    resetForm({values: ''})
                     history.push('/')
                 }
                 )} else {
@@ -83,7 +83,7 @@ const Authentication = ( { updateUser } ) => {
             ) : null}
             </Form.Field>
     
-            <Button type="suBmit">Login</Button>
+            <Button type="submit">Login</Button>
           </Form>
           <Button onClick={handleClick}>{signUp? 'Please Login here' :  'Create an Account!'}</Button>
         </div>
