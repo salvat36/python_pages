@@ -42,7 +42,7 @@ const Authentication = ( { updateUser } ) => {
               if (res.ok) {
                 res.json().then((res) => {
                     updateUser(res)
-                    resetForm( {values: formik.initialValues} )
+                    resetForm()
                     history.push('/')
                 }
                 )} else {
