@@ -31,6 +31,10 @@ class ReaderBook(db.Model, SerializerMixin):
     # validation
     # none in this class
     
+    #! unsure what repr info we need here
+    def __repr__(self):
+        return f'ReaderBook {self.id}'
+    
 class Book(db.Model, SerializerMixin):
     __tablename__ = 'books'
     
@@ -44,9 +48,40 @@ class Book(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, on_update=db.func.now())
     
+    reader_books = db.relationship('ReaderBook', back_populates='book', cascade='all')
+    readers = association_proxy('reader_books', 'reader')
+    
     # serialization
     # serialize_only = ()
     # serialize_rules = ()
     
     # validation
-    # in react - can look at again later if needed here as well
+    #! in react - can look at again later if needed here as well
+
+    def __repr__(self):
+        return f'Book {self.title}, {self.author}, {self.genre}'
+    
+class Reader(db.Model, SerializerMixin):
+    __tablename__ = 'readers'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    
+    username = db.Column(db.VarChar)
+    password = db.Column(db.VarChar)
+    # email
+    
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column(db.DateTime, on_update=db.func.now())
+    
+    reader_books = db.relationship('ReaderBook', back_populates='reader', cascade='all')
+    books = association_proxy('reader_books', 'book')
+    
+    # serialization
+    # serialize_only = ()
+    # serialize_rules = ()
+    
+    # validation
+    #! validate username and password (idk if you can do this on the react side or not?)
+    
+    def __repr__(self):
+        return f'Reader {self.username}, {self.password}'
