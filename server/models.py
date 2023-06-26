@@ -13,16 +13,16 @@ metadata = MetaData(naming_convention={
 db = SQLAlchemy(metadata=metadata)
 
 # Models go here!
-class ReaderBook(db.Model, SerializerMixin):
-    __tablename__ = 'reader_books'
+class UserBook(db.Model, SerializerMixin):
+    __tablename__ = 'user_books'
     
     id = db.Column(db.Integer, primary_key=True)
     
     book_id = db.Column(db.Integer, db.ForeignKey('books.id'))
-    reader_id = db.Column(db.Integer, db.ForeignKey('readers.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     
-    book = db.relationship('Book', back_populates='reader_books')
-    reader = db.relationship('Reader', back_populates='reader_books')
+    book = db.relationship('Book', back_populates='user_books')
+    user = db.relationship('User', back_populates='user_books')
     
     # serialization
     # serialize_only = ()
@@ -33,7 +33,7 @@ class ReaderBook(db.Model, SerializerMixin):
     
     #! unsure what repr info we need here
     def __repr__(self):
-        return f'ReaderBook {self.id}'
+        return f'UserBook {self.id}'
     
 class Book(db.Model, SerializerMixin):
     __tablename__ = 'books'
@@ -48,8 +48,8 @@ class Book(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, on_update=db.func.now())
     
-    reader_books = db.relationship('ReaderBook', back_populates='book', cascade='all')
-    readers = association_proxy('reader_books', 'reader')
+    user_books = db.relationship('UserBook', back_populates='book', cascade='all')
+    users = association_proxy('user_books', 'user')
     
     # serialization
     # serialize_only = ()
@@ -61,8 +61,8 @@ class Book(db.Model, SerializerMixin):
     def __repr__(self):
         return f'Book {self.title}, {self.author}, {self.genre}'
     
-class Reader(db.Model, SerializerMixin):
-    __tablename__ = 'readers'
+class User(db.Model, SerializerMixin):
+    __tablename__ = 'users'
     
     id = db.Column(db.Integer, primary_key=True)
     
@@ -73,8 +73,8 @@ class Reader(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, on_update=db.func.now())
     
-    reader_books = db.relationship('ReaderBook', back_populates='reader', cascade='all')
-    books = association_proxy('reader_books', 'book')
+    user_books = db.relationship('UserBook', back_populates='user', cascade='all')
+    books = association_proxy('user_books', 'book')
     
     # serialization
     # serialize_only = ()
@@ -84,4 +84,4 @@ class Reader(db.Model, SerializerMixin):
     #! validate username and password (idk if you can do this on the react side or not?)
     
     def __repr__(self):
-        return f'Reader {self.username}, {self.password}'
+        return f'User {self.username}, {self.password}'
