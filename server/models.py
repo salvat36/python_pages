@@ -18,7 +18,6 @@ class ReaderBook(db.Model, SerializerMixin):
     
     id = db.Column(db.Integer, primary_key=True)
     
-    # relationships
     book_id = db.Column(db.Integer, db.ForeignKey('books.id'))
     reader_id = db.Column(db.Integer, db.ForeignKey('readers.id'))
     
@@ -32,3 +31,22 @@ class ReaderBook(db.Model, SerializerMixin):
     # validation
     # none in this class
     
+class Book(db.Model, SerializerMixin):
+    __tablename__ = 'books'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    
+    title = db.Column(db.String)
+    author = db.Column(db.String)
+    genre = db.Column(db.String)
+    page_count = db.Column(db.Integer)
+    
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column(db.DateTime, on_update=db.func.now())
+    
+    # serialization
+    # serialize_only = ()
+    # serialize_rules = ()
+    
+    # validation
+    # in react - can look at again later if needed here as well
