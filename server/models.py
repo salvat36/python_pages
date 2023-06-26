@@ -13,7 +13,22 @@ metadata = MetaData(naming_convention={
 db = SQLAlchemy(metadata=metadata)
 
 # Models go here!
-class ReaderBooks(db.Model, SerializerMixin):
-    __tablename__ = 'bookcases'
+class ReaderBook(db.Model, SerializerMixin):
+    __tablename__ = 'reader_books'
     
     id = db.Column(db.Integer, primary_key=True)
+    
+    # relationships
+    book_id = db.Column(db.Integer, db.ForeignKey('books.id'))
+    reader_id = db.Column(db.Integer, db.ForeignKey('readers.id'))
+    
+    book = db.relationship('Book', back_populates='reader_books')
+    reader = db.relationship('Reader', back_populates='reader_books')
+    
+    # serialization
+    # serialize_only = ()
+    # serialize_rules = ()
+    
+    # validation
+    # none in this class
+    
