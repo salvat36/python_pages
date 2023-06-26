@@ -13,3 +13,7 @@ metadata = MetaData(naming_convention={
 db = SQLAlchemy(metadata=metadata)
 
 # Models go here!
+class ReaderBooks(db.Model, SerializerMixin):
+    __tablename__ = 'bookcases'
+    
+    id = db.Column(db.Integer, primary_key=True)
