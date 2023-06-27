@@ -1,16 +1,20 @@
 from config import db
-
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy_serializer import SerializerMixin
 
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+
+
 metadata = MetaData(naming_convention={
     "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
 })
 
-db = SQLAlchemy(metadata=metadata)
+db = SQLAlchemy(app, metadata=metadata)
 
 # Models go here!
 class UserBook(db.Model, SerializerMixin):
@@ -46,7 +50,7 @@ class Book(db.Model, SerializerMixin):
     page_count = db.Column(db.Integer)
     
     created_at = db.Column(db.DateTime, server_default=db.func.now())
-    updated_at = db.Column(db.DateTime, on_update=db.func.now())
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
     
     user_books = db.relationship('UserBook', back_populates='book', cascade='all')
     users = association_proxy('user_books', 'user')
@@ -66,12 +70,12 @@ class User(db.Model, SerializerMixin):
     
     id = db.Column(db.Integer, primary_key=True)
     
-    username = db.Column(db.VarChar)
-    password = db.Column(db.VarChar)
+    username = db.Column(db.String(30))
+    password = db.Column(db.String(30))
     # email
     
     created_at = db.Column(db.DateTime, server_default=db.func.now())
-    updated_at = db.Column(db.DateTime, on_update=db.func.now())
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
     
     user_books = db.relationship('UserBook', back_populates='user', cascade='all')
     books = association_proxy('user_books', 'book')
@@ -85,3 +89,6 @@ class User(db.Model, SerializerMixin):
     
     def __repr__(self):
         return f'User {self.username}, {self.password}'
+    
+with app.app_context():
+    db.create_all()
