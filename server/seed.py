@@ -88,4 +88,8 @@ if __name__ == '__main__':
         print("Shelving UserBooks...")
         userbooks = create_user_books(books, users)
         db.session.add_all(userbooks)
+<<<<<<< HEAD
         db.session.commit()
+=======
+        db.session.commit()
+>>>>>>> 17b46b05a55233301cbd783487a9307db5389916
