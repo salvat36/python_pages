@@ -1,20 +1,14 @@
-from config import db
-from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy_serializer import SerializerMixin
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
-
-
 metadata = MetaData(naming_convention={
     "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
 })
 
-db = SQLAlchemy(app, metadata=metadata)
+db = SQLAlchemy(metadata=metadata)
 
 # Models go here!
 class UserBook(db.Model, SerializerMixin):
@@ -29,8 +23,8 @@ class UserBook(db.Model, SerializerMixin):
     user = db.relationship('User', back_populates='user_books')
     
     # serialization
-    # serialize_only = ()
-    # serialize_rules = ()
+    serialize_only = ('id', 'book_id', 'user_id')
+    serialize_rules = ()
     
     # validation
     # none in this class
@@ -38,12 +32,12 @@ class UserBook(db.Model, SerializerMixin):
     #! unsure what repr info we need here
     def __repr__(self):
         return f'UserBook {self.id}'
-    
+
+
 class Book(db.Model, SerializerMixin):
     __tablename__ = 'books'
     
     id = db.Column(db.Integer, primary_key=True)
-    
     title = db.Column(db.String)
     author = db.Column(db.String)
     genre = db.Column(db.String)
@@ -53,8 +47,17 @@ class Book(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
     
     user_books = db.relationship('UserBook', back_populates='book', cascade='all')
-    users = association_proxy('user_books', 'user')
     
+    # serialization
+    serialize_rules = ('-created_at', '-updated_at')
+    serialize_only = ( 'title','id', 'author')
+    
+    # validation
+    # ...
+
+    def __repr__(self):
+        return f'Book {self.title}, {self.author}, {self.genre}'
+
     # serialization
     # serialize_only = ()
     # serialize_rules = ()
@@ -81,14 +84,11 @@ class User(db.Model, SerializerMixin):
     books = association_proxy('user_books', 'book')
     
     # serialization
-    # serialize_only = ()
-    # serialize_rules = ()
+    serialize_only = ('id','password' 'username')
+    serialize_rules = ('-created_at', '-updated_at')
     
     # validation
     #! validate username and password (idk if you can do this on the react side or not?)
     
     def __repr__(self):
         return f'User {self.username}, {self.password}'
-    
-with app.app_context():
-    db.create_all()
