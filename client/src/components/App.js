@@ -8,17 +8,18 @@ import Login from "./Login";
 function App() {
   return (
     <>
+      <Login />
       <Navbar />
       <Switch>
         <Route exact path='/books/:id'>
-          <Collection/>
+          <Collection />
         </Route>
         <Route>
-          <Home/>
+          <Home />
         </Route>
-        <Route>
-          <Login/>
-        </Route>
+        {/* <Route>
+          <Login />
+        </Route> */}
       </Switch>
     </>
   )

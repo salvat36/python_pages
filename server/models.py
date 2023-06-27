@@ -27,6 +27,7 @@ class UserBook(db.Model, SerializerMixin):
     serialize_rules = ()
     
     # validation
+    #MOST RESTRICTIVE VALIDATIONS HERE
     # none in this class
     
     #! unsure what repr info we need here
@@ -74,7 +75,7 @@ class User(db.Model, SerializerMixin):
     
     id = db.Column(db.Integer, primary_key=True)
     
-    username = db.Column(db.String(30))
+    username = db.Column(db.String(30), unique=True)
     password = db.Column(db.String(30))
     # email
     
@@ -93,6 +94,3 @@ class User(db.Model, SerializerMixin):
     
     def __repr__(self):
         return f'User {self.username}, {self.password}'
-    
-
-    
