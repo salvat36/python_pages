@@ -42,7 +42,7 @@ def login():
         if user.authenticate(password):
             session['user_id'] = user.id
             return (user.to_dict(), 200)
-        return {"Error": "401 Access Denied"}, 401
+        return {'error': '401 Access Denied'}, 401
 
 #SIGNUP
 @app.route('/signup', methods=['GET', 'POST'])
@@ -56,7 +56,7 @@ def signup():
         session['user_id'] = user.id
         return make_response(user.to_dict(), 201)
     except Exception as e:
-        return make_response({'Error': 'str(e)'}, 422)
+        return make_response({'error': str(e)}, 422)
     
 #LOGOUT
 @app.route('/logout', methods=['DELETE'])
