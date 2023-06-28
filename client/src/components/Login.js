@@ -5,11 +5,11 @@ const Login = () => {
 
     const LoginSchema = yup.object().shape({
         username: yup.string()
-        .required('Must Enter username!')
+        .required('Must Enter Username')
         .min(8, 'Too Short!')
         .max(18, 'Too Long!'),
         password: yup.string()
-        .required('Must Enter a Password!')
+        .required('Must Enter a Password')
         .min(8)
         .max(20),
     })
@@ -24,11 +24,12 @@ const ValidationLogin = () => (
             }}
             validationSchema={LoginSchema}
             onSubmit= {({ values }) => {
-                alert(JSON.stringify(values, null, 2))
+                debugger;
+                alert(JSON.stringify(values));
             }}
         >
             {({ errors, touched, values }) => (
-                <Form values={values}>
+                <Form>
                     <Field name= 'username' />
                     {errors.username && touched.username ? (
                         <div>{errors.username}</div>
@@ -40,9 +41,9 @@ const ValidationLogin = () => (
                     <button type='submit'>Login</button>
                 </Form>
             )}
-            </Formik>
+        </Formik>
     </div>
-);
+)
 return <ValidationLogin />   
 }
 
