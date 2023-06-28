@@ -48,25 +48,25 @@ class Book(db.Model, SerializerMixin):
     
     @validates('title')
     def validates_title(self, key, title):
-        if not isinstance(title, str) or not (2 <= len(title) <= 20):
+        if type(title) not in [str] or not (2 <= len(title) <= 20):
             raise ValueError('Title must be a string between 2 and 20 characters')
         return title
     
     @validates('author')
     def validates_author(self, key, author):
-        if not isinstance(author, str) or not (2 <= len(author) <= 20):
+        if type(author) not in [str] or not (2 <= len(author) <= 20):
             raise ValueError('Author must be a string between 2 and 20 characters')
         return author
     
     @validates('genre')
     def validates_genre(self, key, genre):
-        if not isinstance(genre, str) or not (2 <= len(genre) <= 20):
+        if type(genre) not in [str] or not (2 <= len(genre) <= 20):
             raise ValueError('Genre must be a string between 2 and 20 characters')
         return genre
     
     @validates('page_count')
     def validates_page_count(self, key, page_count):
-        if type(page_count) not in [int, float] or not 100 <= page_count <= 1000:
+        if type(page_count) not in [int] or not 100 <= page_count <= 1000:
             raise ValueError('Page count must be between 100 and 1000 pages')
     
     def __repr__(self):
