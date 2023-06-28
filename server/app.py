@@ -1,17 +1,15 @@
 #!/usr/bin/env python3
 
 # Standard library imports
-from flask import Flask, request, jsonify, make_response
+from flask import Flask, request, jsonify, make_response, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-# from config import app, db, api
 from models import User, UserBook, Book, db
 import os
 from flask_restful import Resource, Api
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-DATABASE = os.environ.get(
-    "DB_URI", f"sqlite:///{os.path.join(BASE_DIR, 'instance/app.db')}")
+DATABASE = os.environ.get("DB_URI", f"sqlite:///{os.path.join(BASE_DIR, 'instance/app.db')}")
 
 app = Flask(__name__)
 
@@ -31,9 +29,47 @@ api = Api(app)
 
 # Views go here!
 
+#HOME
 @app.route('/')
-def index():
-    return '<h1> home page </h1>'
+def home():
+    return '<h1> home page</h1>'
+
+#LOGIN
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    data = request.get_json()
+    username = data.get('username')
+    password = data.get('password')
+
+    user = User.query.filter(User.username == username).first()
+
+    if user:
+        if user.authenticate(password):
+            session['user_id'] = user.id
+            return (user.to_dict(), 200)
+        return {"Error": "401 Access Denied"}, 401
+
+#SIGNUP
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    data = request.get_json()
+    user = User(**data)
+    try:
+        db.session.add(user)
+        db.session.commit()
+        session['user_id'] = user.id
+        return make_response(user.to_dict(), 201)
+    except Exception as e:
+        return make_response({'Error': 'str(e)'}, 422)
+    
+#LOGOUT
+@app.route('/logout', methods=['DELETE'])
+def logout():
+    if session.get('user_id'):
+        session['user_id'] = None
+        return make_response({'message': 'Successfully Logged Out'}, 204)
+    return make_response({'error'})
+
 
 class UserBooks(Resource):
     def get(self):
@@ -90,6 +126,7 @@ class UserById(Resource):
             return make_response(user.to_dict(), 200)
         return make_response({'error': 'User not found'}, 404)
 api.add_resource(UserById, '/users/<int:id>')
+
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
