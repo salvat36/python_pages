@@ -26,7 +26,7 @@ api = Api(app)
 #HOME
 @app.route('/')
 def home():
-    return '<h1> home page</h1>'
+    return '<h1>home page</h1>'
 
 #LOGIN
 @app.route('/login', methods=['GET', 'POST'])
