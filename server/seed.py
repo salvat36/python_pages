@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # Standard library imports
-from random import randint, choice as rc
+from random import randint, choice as rc, random
 
 # Remote library imports
 from faker import Faker
@@ -24,7 +24,7 @@ fake = Faker()
 print("Starting seed...")
         
 def create_books():
-    genres = ['manga', 'fantasy' 'sci-fy', 'fiction', 'non-fiction', 'romance', 'mystery', 'thriller', 'philosophy']
+    genres = ['manga', 'fantasy', 'sci-fy', 'fiction', 'non-fiction', 'romance', 'mystery', 'thriller', 'philosophy']
     books = []
     for _ in range(500):
         book = Book(
@@ -42,8 +42,8 @@ def create_users():
     users = []
     for _ in range(100):
         user = User(
-            username = fake.name(),
-            password = randint(200, 1000),
+            username = fake.user_name(),
+            password = fake.password(length=8),
             created_at = fake.date_time(),
             updated_at = fake.date_time()
         )
