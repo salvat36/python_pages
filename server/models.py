@@ -33,7 +33,6 @@ class UserBook(db.Model, SerializerMixin):
     def __repr__(self):
         return f'UserBook {self.id}'
 
-
 class Book(db.Model, SerializerMixin):
     __tablename__ = 'books'
     
@@ -48,23 +47,14 @@ class Book(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
     
     user_books = db.relationship('UserBook', back_populates='book', cascade='all')
+    # user
     
     # serialization
-    serialize_rules = ('-created_at', '-updated_at')
-    serialize_only = ( 'title','id', 'author')
+    serialize_only = ('title', 'id', 'author')
+    # serialize_rules = ('-created_at', '-updated_at')
     
     # validation
     # ...
-
-    def __repr__(self):
-        return f'Book {self.title}, {self.author}, {self.genre}'
-
-    # serialization
-    # serialize_only = ()
-    # serialize_rules = ()
-    
-    # validation
-    #! in react - can look at again later if needed here as well
 
     def __repr__(self):
         return f'Book {self.title}, {self.author}, {self.genre}'
@@ -85,14 +75,11 @@ class User(db.Model, SerializerMixin):
     books = association_proxy('user_books', 'book')
     
     # serialization
-    serialize_only = ('id','password' 'username')
-    serialize_rules = ('-created_at', '-updated_at')
+    serialize_only = ('id', 'password', 'username')
+    # serialize_rules = ('-created_at', '-updated_at')
     
     # validation
     #! validate username and password (idk if you can do this on the react side or not?)
     
     def __repr__(self):
         return f'User {self.username}, {self.password}'
-    
-
-    
