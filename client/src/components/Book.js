@@ -1,18 +1,16 @@
-import React from 'react'
+import React from 'react';
 
-const Book = () => {
+const BookItem = ({ book }) => {
+  const { title, author, spineImg } = book;
+
   return (
-    <div>
-    <h3>Book</h3>
-    <p>Author</p>
-    <p>Title</p>
-    <p>Spine IMG HERE</p>
-    <p></p>
+    <span>
+      <h3>{title}</h3>
+      <p>Author: {author}</p>
+      <img src={spineImg} alt="Book Spine" />
+      {/* Additional book details can be added here */}
+    </span>
+  );
+};
 
-
-    </div>
-    // ! RENDER INDIVIDUAL BOOKS HERE //
-  )
-}
-
-export default Book
+export default BookItem;

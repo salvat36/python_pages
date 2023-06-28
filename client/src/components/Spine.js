@@ -1,12 +1,12 @@
-import Book from "./Book";
-import React from 'react'
+import React from 'react';
 
-const Spine = () => {
+const Spine = ({ title, spineImg }) => {
   return (
-    <span>
-        <Book/>
-    </span>
-  )
-}
+    <div className="spine">
+      <img src={spineImg} alt="Book Spine" />
+      <span>{title}</span>
+    </div>
+  );
+};
 
-export default Spine
+export default Spine;

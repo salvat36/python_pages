@@ -1,14 +1,18 @@
-import React from 'react'
-import Search from './Search'
-import Book from './Book'
+import React from 'react';
+import Search from './Search';
+import Book from './Book';
 
-const Collection = () => {
+const Collection = ({ books }) => {
   return (
     <div>
-        <Search/>
-        <Book/>
+      <Search />
+      <div className="bookcase">
+        {books.map((book) => (
+          <Book key={book.id} title={book.title} spineImg={book.spineImg} />
+        ))}
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Collection
+export default Collection;
