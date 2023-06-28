@@ -19,17 +19,14 @@ class UserBook(db.Model, SerializerMixin):
     book = db.relationship('Book', back_populates='user_books')
     user = db.relationship('User', back_populates='user_books')
     
-    # serialization
     serialize_only = ('id', 'book_id', 'user_id')
     serialize_rules = ()
     
     # validation
-    #MOST RESTRICTIVE VALIDATIONS HERE
-    # none in this class
+    # MOST RESTRICTIVE VALIDATIONS HERE
     
-    #! unsure what repr info we need here
     def __repr__(self):
-        return f'UserBook {self.id}'
+        return f'UserBook {self.id}, {self.book_id}, {self.user_id}'
 
 class Book(db.Model, SerializerMixin):
     __tablename__ = 'books'
@@ -47,9 +44,8 @@ class Book(db.Model, SerializerMixin):
     user_books = db.relationship('UserBook', back_populates='book', cascade='all')
     users = association_proxy('user_books', 'user')
     
-    # serialization
-    serialize_only = ('title', 'id', 'author')
-    # serialize_rules = ('-created_at', '-updated_at')
+    serialize_only = ('id', 'title', 'author', 'genre', 'page_count')
+    serialize_rules = ()
     
     # validation
     # ...
@@ -72,12 +68,22 @@ class User(db.Model, SerializerMixin):
     user_books = db.relationship('UserBook', back_populates='user', cascade='all')
     books = association_proxy('user_books', 'book')
     
-    # serialization
-    serialize_only = ('id', 'password', 'username')
-    # serialize_rules = ('-created_at', '-updated_at')
+    serialize_only = ('id', 'username', 'password', 'user_books')
+    serialize_rules = ('-user_books.id', '-user_books.user_id')
     
     # validation
     #! validate username and password (idk if you can do this on the react side or not?)
-    
+    @validates('username')
+    def validate_username(self, key, username):
+        if type(username) not in [str] or not range(3, 20):
+            raise ValueError('Username must be a string between 3 and 20 characters')
+        return username
+
+    @validates('password')
+    def validate_password(self, key, password):
+        if type(password) not in [str] or not range(3, 20):
+            raise ValueError('Password must be a string between 3 and 20 characters')
+        return password
+
     def __repr__(self):
         return f'User {self.username}, {self.password}'
