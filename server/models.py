@@ -52,11 +52,11 @@ class Book(db.Model, SerializerMixin):
             raise ValueError('Title must be a string between 2 and 20 characters')
         return title
     
-    @validates('author')
-    def validates_author(self, key, author):
-        if type(author) not in [str] or not (2 <= len(author) <= 20):
-            raise ValueError('Author must be a string between 2 and 20 characters')
-        return author
+    # @validates('author')
+    # def validates_author(self, key, author):
+    #     if type(author) not in [str] or not (2 <= len(author) <= 20):
+    #         raise ValueError('Author must be a string between 2 and 20 characters')
+    #     return author
     
     @validates('genre')
     def validates_genre(self, key, genre):
