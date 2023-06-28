@@ -30,6 +30,7 @@ def home():
 
 #LOGIN
 @app.route('/login', methods=['GET', 'POST'])
+
 def login():
     data = request.get_json()
     username = data.get('username')
@@ -45,6 +46,7 @@ def login():
 
 #SIGNUP
 @app.route('/signup', methods=['GET', 'POST'])
+
 def signup():
     data = request.get_json()
     user = User(**data)
@@ -72,7 +74,7 @@ class UserBooks(Resource):
 
 api.add_resource(UserBooks, '/user-books')
 
-class UserBookById(Resource):  # need to add for specific user
+class UserBookById(Resource):
     
     def get(self, id):
         user_book = db.session.get(UserBook, id)
