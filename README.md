@@ -7,7 +7,9 @@ This is a Flask-React application that allows users to manage books. The applica
 - View details of a specific book.
 - Search for a book
 - Add books to collection
-  
+
+## table relations
+
 <img width="988" alt="Screenshot 2023-06-29 at 3 28 40 PM" src="https://github.com/salvat36/python_pages/assets/116766995/a2a2e2a6-30c4-47b9-869c-c4d2d80cf9b7">
 
 ## Installation
@@ -19,16 +21,26 @@ To run the application, follow these steps:
 1. Install Python 3.x if you haven't already.
 
 2. Set up the database:
+
    ```
    flask db init
    flask db migrate
    flask db upgrade
    ```
-3.  Start the Flask backend server:
+
+## Install additional dependencies by running the following commands:
 
    ```
-   flask run
+   pipenv install flask-cors
+   pipenv install flask-bcrypt
+   pipenv install python-dotenv
    ```
+
+3. Start the Flask backend server:
+
+```
+flask run
+```
 
 ### Frontend Setup
 
@@ -57,6 +69,8 @@ Once the application is up and running, you can access it in your web browser at
 
 Remember to log out when you're done using the application.
 
+Happy Reading! 📚📖
+
 ## Technologies Used
 
 - Flask: A micro web framework for building the backend server.
@@ -65,11 +79,8 @@ Remember to log out when you're done using the application.
 - React: A JavaScript library for building user interfaces.
 - React Router: A routing library for React applications.
 
-
-
 ## Connect with us
 
 https://github.com/sturco42
 https://github.com/salvat36
 https://github.com/Chaospearl64
-
