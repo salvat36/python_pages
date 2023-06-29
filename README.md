@@ -63,3 +63,11 @@ Remember to log out when you're done using the application.
 - React: A JavaScript library for building user interfaces.
 - React Router: A routing library for React applications.
 
+
+
+## Connect with us
+
+https://github.com/sturco42
+https://github.com/salvat36
+https://github.com/Chaospearl64
+
