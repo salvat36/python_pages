@@ -7,6 +7,8 @@ This is a Flask-React application that allows users to manage books. The applica
 - View details of a specific book.
 - Search for a book
 - Add books to collection
+  
+<img width="988" alt="Screenshot 2023-06-29 at 3 28 40 PM" src="https://github.com/salvat36/python_pages/assets/116766995/a2a2e2a6-30c4-47b9-869c-c4d2d80cf9b7">
 
 ## Installation
 
