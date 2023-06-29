@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-const SignupForm = ({ onLogin }) => {
+const SignupForm = ({ onSignup }) => {
   const signupSchema = yup.object().shape({
     username: yup
       .string()
@@ -29,7 +29,7 @@ const SignupForm = ({ onLogin }) => {
         .then((res) => {
           setSubmitting(false);
           if (res.ok) {
-            res.json().then((user) => onLogin(user));
+            res.json().then((user) => onSignup(user));
           } else {
             res.json().then((err) => setErrors(err.errors));
           }
