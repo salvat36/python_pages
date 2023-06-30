@@ -11,7 +11,6 @@ const [error, setError] = useState(null)
     <div>
       <Link to={`/books/${id}`}>Title: {title} Author: {author}</Link>
     </div>
-    // ! RENDER INDIVIDUAL BOOKS HERE //
   )
 }
 
