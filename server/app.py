@@ -158,7 +158,8 @@ class UserById(Resource):
             return make_response('', 204)
         except Exception as e:
             return make_response({'error': str(e)}, 422)
-        
+    
+    #! PATCH STILL NEEDS TO BE COMPLETED
     def patch(self, id):
         if 'user_id' not in session:
             return make_response({'error': 'Unauthorized'}, 401)
@@ -168,13 +169,13 @@ class UserById(Resource):
                 return make_response({'error': 'Cannot find that user in your database'}, 404)
             
             data = request.get_json()
-            
+            #! the get info might have to be differnt / more targeted
             user.username = data.get('username')
             user.password = data.get('password')
             
             db.session.commit()
             
-            return make_response('', 204)
+            return make_response(user.to_dict(), 200)
         except Exception as e:
             return make_response({'error': str(e)}, 422)
 

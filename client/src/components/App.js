@@ -108,6 +108,7 @@ function App() {
     .then((res) => {
       if (res.ok) {
         removeUser(user)
+        setUser(null)
         alert('Successfully Deleted User')
         history.push('/login')
       } else {
@@ -141,7 +142,7 @@ function App() {
           <AllBooks booksToDisplay={booksToDisplay} />
         </Route>
         <Route exact path='/user-books'>
-          <UserBooks user={user} handleDeleteUser={handleDeleteUser}/>
+          <UserBooks user={user} updateUser={updateUser} handleDeleteUser={handleDeleteUser}/>
         </Route>
         <Route exact path='/books/:id'>
           <BookDetails user={user} addUserBook={addUserBook} removeUserBook={removeUserBook}/>
