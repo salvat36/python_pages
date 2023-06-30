@@ -28,14 +28,13 @@ const NavBar = ( {updateUser, user, handleLogoutClick}) => {
       onClick={handleClick}
     />
   ) : (
-    <button onClick={handleLogoutClick}>Logout</button>
-    // <Menu.Item 
-    //     as={NavLink}
-    //     exact to="/logout"
-    //     name='Logout'
-    //     active={active === 'logout'}
-    //     onClick={handleClick}
-    //   />
+    <Menu.Item 
+        as={NavLink}
+        exact to="/logout"
+        name='Logout'
+        active={active === 'logout'}
+        onClick={handleLogoutClick}
+      />
   )}
       <Menu.Item 
         as={NavLink}

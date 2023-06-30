@@ -44,10 +44,7 @@ function App() {
   const toggleIsLoggedIn = () => {
     setIsLoggedIn(isLoggedIn => !isLoggedIn)
   }
-  
 
-
-  
   useEffect(()=> {
     const fetchUser = () => {
       fetch('/authenticate')
