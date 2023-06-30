@@ -75,7 +75,8 @@ function App() {
     setIsLoggedIn(current => !isLoggedIn)
   }
 
-  //! REMOVE AND PATCH USER CODE START need to make it logout of the deleted user for the delete
+  //! REMOVE AND PATCH USER CODE START
+  //! need to make it logout of the deleted user for the delete or at least page refresh...
   const removeUser = (user) => {
     setUser((currentUser) => {
       if (currentUser.user) {
@@ -100,8 +101,8 @@ function App() {
       }
     });
   }
-  //! DELETE AND PATCH USER CODE END
-  
+  //! DELETE AND PATCH USER CODE END 
+
   if (!user)  {
     return (
       <>
