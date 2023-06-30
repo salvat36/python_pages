@@ -6,10 +6,9 @@ const BookCard = ( {author, genre, page_count, title, id} ) => {
 
 const [error, setError] = useState(null)
 
-
   return (
     <div>
-      <Link to={`/books/${id}`}>Title: {title} Author: {author}</Link>
+      <Link to={`/books/${id}`}>{title} by {author}</Link>
     </div>
   )
 }

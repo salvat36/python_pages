@@ -16,7 +16,6 @@ const NavBar = ( {updateUser, user, handleLogoutClick}) => {
       setActive(name)
   }
 
-
   return(
     <Menu secondary id="navbar">
       {!user ? (
@@ -28,14 +27,13 @@ const NavBar = ( {updateUser, user, handleLogoutClick}) => {
       onClick={handleClick}
     />
   ) : (
-    <button onClick={handleLogoutClick}>Logout</button>
-    // <Menu.Item 
-    //     as={NavLink}
-    //     exact to="/logout"
-    //     name='Logout'
-    //     active={active === 'logout'}
-    //     onClick={handleClick}
-    //   />
+    <Menu.Item 
+        as={NavLink}
+        exact to="/logout"
+        name='Logout'
+        active={active === 'logout'}
+        onClick={handleLogoutClick}
+      />
   )}
       <Menu.Item 
         as={NavLink}
@@ -61,7 +59,6 @@ const NavBar = ( {updateUser, user, handleLogoutClick}) => {
     </Menu>
 )
 }
-
 
 export default NavBar;
 //* <button onCLick={handleClick}>{signUp ? 'Log In!' : 'Register now!'}</button> */

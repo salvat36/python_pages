@@ -3,7 +3,7 @@ import SearchBooks from "./SearchBooks";
 import BookCard from "./BookCard";
 import UserBooks from "./UserBooks";
 
-const AllBooks = () => {
+const AllBooks = ( {booksToDisplay} ) => {
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
@@ -13,13 +13,11 @@ const AllBooks = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  const mappedBooks = books.map((book) => (
-    <BookCard key={book.id} setBooks={setBooks} {...book} />
-  ));
+  const mappedBooks = booksToDisplay.map((book) => (<BookCard key={book.id} {...book} />));
 
   return (
     <div>
-      <SearchBooks />
+      {/* <SearchBooks /> */}
       {mappedBooks}
     </div>
   );

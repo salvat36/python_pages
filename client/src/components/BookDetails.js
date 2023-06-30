@@ -39,12 +39,10 @@ const BookDetails = ({ user, addUserBook, removeUserBook }) => {
     });
   };
 
-  if (!book) return "Loading...";
-  const { author, genre, page_count, title } = book;
-  const userBooks = user?.user_books.map((userBook) => userBook.book);
-  const bookInCollection = userBooks.some(
-    (book) => book.title === title && book.author === author
-  );
+if (!book) return 'Loading...'
+const {author, genre, page_count, title} = book
+const userBooks = user?.user_books.map((userBook) => userBook.book)
+const bookInCollection = userBooks.some(book => book.title === title && book.author === author)
   return (
     <>
       <div>BookDetails</div>

@@ -8,7 +8,6 @@ from models import User, UserBook, Book, db
 from config import app, api
 from flask_restful import Resource
 
-
 #HOME
 @app.route('/')
 def home():
@@ -41,7 +40,6 @@ def signup():
         username=username,
         password_hash =data.get('password')
     )
-
     try:
         db.session.add(user)
         db.session.commit()
@@ -59,6 +57,7 @@ def logout():
     return make_response({'error'})
 
 class UserBooks(Resource):
+    
     def get(self):
         # user_books = [ub.to_dict() for ub in UserBook.query.filter(session.get('user_id')).all()]
         user_books = [ub.to_dict() for ub in UserBook.query.all()]
@@ -90,8 +89,6 @@ class UserBookById(Resource):
             return make_response(user_book.to_dict(), 200)
         return make_response({'error': 'user_book must have a valid user and valid book '}, 404)
     
-
-
     def delete(self, id):
         if 'user_id' not in session:
             return make_response({'error': 'Unauthorized' }, 401)
@@ -145,6 +142,44 @@ class Users(Resource):
             return make_response({'errors': ['validation errors']}, 400)
 
 api.add_resource(Users, '/users')
+
+class UserById(Resource):
+    def delete(self, id):
+        if 'user_id' not in session:
+            return make_response({'error': 'Unauthorized' }, 401)
+        # import ipdb; ipdb.set_trace()
+        try:
+            user = User.query.filter_by(id = session.get('user_id')).first()
+            if not user:
+                return make_response({'error': 'Cannot find that user in your database'}, 404)
+            db.session.delete(user)
+            db.session.commit()
+            session.clear()
+            return make_response('', 204)
+        except Exception as e:
+            return make_response({'error': str(e)}, 422)
+    
+    #! PATCH STILL NEEDS TO BE COMPLETED
+    def patch(self, id):
+        if 'user_id' not in session:
+            return make_response({'error': 'Unauthorized'}, 401)
+        try:
+            user = User.query.filter_by(id=session.get('user_id')).first()
+            if not user:
+                return make_response({'error': 'Cannot find that user in your database'}, 404)
+            
+            data = request.get_json()
+            #! the get info might have to be differnt / more targeted
+            user.username = data.get('username')
+            user.password = data.get('password')
+            
+            db.session.commit()
+            
+            return make_response(user.to_dict(), 200)
+        except Exception as e:
+            return make_response({'error': str(e)}, 422)
+
+api.add_resource(UserById, '/users/<int:id>')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
