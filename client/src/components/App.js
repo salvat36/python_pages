@@ -56,9 +56,31 @@ function App() {
     ))  
   }
 
-
-
-
+  const removeUser = (user) => {
+    setUser((currentUser) => {
+      if (currentUser.user) {
+        return {
+          ...currentUser,
+          user: currentUser.user.filter((otherUser) => otherUser.id !== user.id),
+        }
+      }
+      return currentUser
+    })
+  }
+  
+  function handleDeleteUser() {
+    fetch(`/users/${user.id}`, {method: 'DELETE'})
+    .then((res) => {
+      if (res.ok) {
+        removeUser(user)
+        setUser(null)
+        alert('Successfully Deleted User')
+        history.push('/login')
+      } else {
+        alert('Something went wrong')
+      }
+    });
+  }
   
   useEffect(()=> {
     const fetchUser = () => {
