@@ -45,11 +45,11 @@ const userBooks = user?.user_books.map((userBook) => userBook.book)
 const bookInCollection = userBooks.some(book => book.title === title && book.author === author)
   return (
     <>
-      <div>BookDetails</div>
-      <h1>{title}</h1>
-      <h3>{author}</h3>
-      <h3>{genre}</h3>
-      <h3>{page_count}</h3>
+      <div>Book Info</div>
+      <h1>Title: {title}</h1>
+      <h3>Author: {author}</h3>
+      <h3>Genre: {genre}</h3>
+      <h3>Page Count: {page_count}</h3>
       {!bookInCollection ? (
         <button onClick={handleAddBook}>Add to Library</button>
       ) : (
