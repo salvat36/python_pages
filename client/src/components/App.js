@@ -10,6 +10,7 @@ import Header from './Header'
 import '../App.css';
 import UserBooks from './UserBooks';
 import BookDetails from './BookDetails';
+import SearchBooks from './SearchBooks';
 
 function App() {
 
@@ -18,6 +19,19 @@ function App() {
   const history = useHistory()
   const [books, setBooks] = useState([])
   const {id} = useParams()
+
+  const [searchBook, setSearchBook] = useState('')
+
+  useEffect(()=>{
+    fetch('/books')
+    .then(res => res.json())
+    .then(setBooks)
+    .catch(err => console.log(err))
+  }, [])
+  
+  const onSearch = (input) => {
+    setSearchBook(input)
+  }
 
   const updateUser = (user) => { 
     setUser(user)
@@ -112,15 +126,22 @@ function App() {
     );
   }
 
+  const booksToDisplay = books.filter((book) => {
+    return book.title.toLowerCase().includes(searchBook.toLowerCase()) ||
+    book.author.toLowerCase().includes(searchBook.toLowerCase()) ||
+    book.genre.toLowerCase().includes(searchBook.toLowerCase())
+  })
+
   return (
     <>
     <Header handleLogoutClick={handleLogoutClick} user={user}/>
       <Switch>
         <Route exact path='/books'>
-          <AllBooks />
+          <SearchBooks searchBook={searchBook} setSearchBook={setSearchBook} onSearch={onSearch} />
+          <AllBooks booksToDisplay={booksToDisplay} />
         </Route>
         <Route exact path='/user-books'>
-          <UserBooks user={user} books={books} handleDeleteUser={handleDeleteUser}/>
+          <UserBooks user={user} handleDeleteUser={handleDeleteUser}/>
         </Route>
         <Route exact path='/books/:id'>
           <BookDetails user={user} addUserBook={addUserBook} removeUserBook={removeUserBook}/>

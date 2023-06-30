@@ -3,21 +3,13 @@ import SearchBooks from './SearchBooks'
 import BookCard from './BookCard'
 import UserBooks from './UserBooks'
 
-const AllBooks = () => {
-const [books, setBooks] = useState([])
+const AllBooks = ( {booksToDisplay} ) => {
 
-useEffect(()=>{
-  fetch('/books')
-  .then(res => res.json())
-  .then(setBooks)
-  .catch(err => console.log(err))
-}, [])
-
-const mappedBooks = books.map(book => <BookCard key={book.id} setBooks={setBooks} {...book}/>)
+const mappedBooks = booksToDisplay.map(book => <BookCard key={book.id} {...book}/>)
 
   return (
     <div>
-        <SearchBooks/>
+        {/* <SearchBooks setSearchBook={setSearchBook} searchBook={searchBook} onSearch={onSearch} /> */}
         {mappedBooks}
     </div>
   )

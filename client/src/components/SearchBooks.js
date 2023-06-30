@@ -1,16 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Input } from 'semantic-ui-react'
 
-const SearchBooks = () => {
+const SearchBooks = ( {searchBook, onSearch} ) => {
   
   const handleChange = (e) => {
       onSearch(e.target.value)
-  }
-  
-  const [searchBook, setSearchBook] = useState('')
-
-  const onSearch = (input) => {
-    setSearchBook(input)
   }
 
   return(
