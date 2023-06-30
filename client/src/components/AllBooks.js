@@ -13,11 +13,7 @@ useEffect(()=>{
   .catch(err => console.log(err))
 }, [])
 
-
-
 const mappedBooks = books.map(book => <BookCard key={book.id} setBooks={setBooks} {...book}/>)
-
-
 
   return (
     <div>

@@ -16,7 +16,6 @@ const NavBar = ( {updateUser, user, handleLogoutClick}) => {
       setActive(name)
   }
 
-
   return(
     <Menu secondary id="navbar">
       {!user ? (
@@ -60,7 +59,6 @@ const NavBar = ( {updateUser, user, handleLogoutClick}) => {
     </Menu>
 )
 }
-
 
 export default NavBar;
 //* <button onCLick={handleClick}>{signUp ? 'Log In!' : 'Register now!'}</button> */
