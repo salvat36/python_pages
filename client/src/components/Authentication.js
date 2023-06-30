@@ -9,7 +9,6 @@ const Authentication = ( { updateUser } ) => {
 
     const handleClick = () => setSignUp((signUp) => !signUp)
 
-    
     const formSchema = yup.object().shape({
         username: yup
           .string()

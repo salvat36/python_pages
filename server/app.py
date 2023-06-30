@@ -147,16 +147,37 @@ class UserById(Resource):
     def delete(self, id):
         if 'user_id' not in session:
             return make_response({'error': 'Unauthorized' }, 401)
+        # import ipdb; ipdb.set_trace()
         try:
-            user = User.query.filter_by(user_id = session.get('user_id'), user_id = id).first()
+            user = User.query.filter_by(id = session.get('user_id')).first()
             if not user:
-                return make_response({'error': 'Cannot find that book in your library'}, 404)
-            # import ipdb; ipdb.set_trace()
+                return make_response({'error': 'Cannot find that user in your database'}, 404)
             db.session.delete(user)
             db.session.commit()
+            session.clear()
             return make_response('', 204)
         except Exception as e:
             return make_response({'error': str(e)}, 422)
+        
+    def patch(self, id):
+        if 'user_id' not in session:
+            return make_response({'error': 'Unauthorized'}, 401)
+        try:
+            user = User.query.filter_by(id=session.get('user_id')).first()
+            if not user:
+                return make_response({'error': 'Cannot find that user in your database'}, 404)
+            
+            data = request.get_json()
+            
+            user.username = data.get('username')
+            user.password = data.get('password')
+            
+            db.session.commit()
+            
+            return make_response('', 204)
+        except Exception as e:
+            return make_response({'error': str(e)}, 422)
+
 api.add_resource(UserById, '/users/<int:id>')
 
 if __name__ == '__main__':

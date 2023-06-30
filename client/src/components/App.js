@@ -17,6 +17,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const history = useHistory()
   const [books, setBooks] = useState([])
+  const {id} = useParams()
 
   const updateUser = (user) => { 
     setUser(user)
@@ -60,7 +61,6 @@ function App() {
     fetchUser()
   }, [])
   
-  
   function handleLogoutClick() {
     fetch('/logout', {method: 'DELETE'})
     .then((res) => {
@@ -75,28 +75,51 @@ function App() {
     setIsLoggedIn(current => !isLoggedIn)
   }
 
+  //! REMOVE AND PATCH USER CODE START need to make it logout of the deleted user for the delete
+  const removeUser = (user) => {
+    setUser((currentUser) => {
+      if (currentUser.user) {
+        return {
+          ...currentUser,
+          user: currentUser.user.filter((otherUser) => otherUser.id !== user.id),
+        }
+      }
+      return currentUser
+    })
+  }
 
-
-if (!user)  {
-  return (
-    <>
-      <Navbar/>
-      <Authentication updateUser={updateUser}/>
-    </>
-  );
-}
-
+  function handleDeleteUser() {
+    fetch(`/users/${user.id}`, {method: 'DELETE'})
+    .then((res) => {
+      if (res.ok) {
+        removeUser(user)
+        alert('Successfully Deleted User')
+        history.push('/login')
+      } else {
+        alert('Something went wrong')
+      }
+    });
+  }
+  //! DELETE AND PATCH USER CODE END
+  
+  if (!user)  {
+    return (
+      <>
+        <Navbar/>
+        <Authentication updateUser={updateUser}/>
+      </>
+    );
+  }
 
   return (
     <>
     <Header handleLogoutClick={handleLogoutClick} user={user}/>
-      {/* <Navbar handleLogoutClick={handleLogoutClick} handleLoginClick={handleLoginClick} user={user}/> */}
       <Switch>
         <Route exact path='/books'>
           <AllBooks />
         </Route>
         <Route exact path='/user-books'>
-          <UserBooks user={user} books={books} />
+          <UserBooks user={user} books={books} handleDeleteUser={handleDeleteUser}/>
         </Route>
         <Route exact path='/books/:id'>
           <BookDetails user={user} addUserBook={addUserBook} removeUserBook={removeUserBook}/>
