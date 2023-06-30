@@ -99,7 +99,7 @@ class User(db.Model, SerializerMixin):
     user_books = db.relationship('UserBook', back_populates='user', cascade='all')
     books = association_proxy('user_books', 'book')
     
-    serialize_only = ('id', 'username', 'user_books')
+    serialize_only = ('id', 'username', 'user_books', 'user_books.book')
     serialize_rules = ('-user_books.id', '-user_books.user_id')
 
     @validates('username')

@@ -8,6 +8,8 @@ import Authentication from './Authentication';
 import Book from './BookCard';
 import Header from './Header'
 import '../App.css';
+import UserBooks from './UserBooks';
+import BookDetails from './BookDetails';
 
 function App() {
 
@@ -16,34 +18,43 @@ function App() {
   const history = useHistory()
   const [books, setBooks] = useState([])
 
-  const updateUser = () => { 
-    setUser(current => !current)
+  const updateUser = (user) => { 
+    setUser(user)
+  }
+
+  const addUserBook = (book) => {
+    setUser(currentUser => (
+      {...currentUser, 
+        user_books: [
+          ...currentUser.user_books,
+              {
+                book
+              }
+      ]}
+    ))  
+  }
+
+  const removeUserBook = (book) => {
+    setUser(currentUser => (
+      {...currentUser, 
+        user_books: currentUser.user_books.filter((userBook) => userBook.book.id !== book.id)}
+    ))  
   }
 
   const toggleIsLoggedIn = () => {
     setIsLoggedIn(isLoggedIn => !isLoggedIn)
   }
-
-  
-  
-  // Get all Books
-  useEffect(()=>{
-    fetch('/books')
-    .then(res => res.json())
-    .then(setBooks)
-    .catch(err => console.log(err))
-  }, [])
   
 
 
   
   useEffect(()=> {
     const fetchUser = () => {
-      fetch('/authenticate', {method: 'POST'})
+      fetch('/authenticate')
       .then((res) => {
         if (res.ok) {
           res.json()
-      .then(updateUser(res));
+      .then(updateUser);
         } else {
           setUser(null);
         }
@@ -86,6 +97,12 @@ if (!user)  {
       <Switch>
         <Route exact path='/books'>
           <AllBooks />
+        </Route>
+        <Route exact path='/user-books'>
+          <UserBooks user={user} books={books} />
+        </Route>
+        <Route exact path='/books/:id'>
+          <BookDetails user={user} addUserBook={addUserBook} removeUserBook={removeUserBook}/>
         </Route>
       </Switch>
     </>
