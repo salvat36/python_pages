@@ -1,18 +1,16 @@
-import NavBar from './NavBar.js'
-import React from 'react'
-import { Header as SemanticHeader } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Header as SemanticHeader } from "semantic-ui-react";
 
-const Header = ( {user, handleLogoutClick}) => {
+import NavBar from "./NavBar";
 
-    return(
-        <header>
-            <Link to='/'>
-                <SemanticHeader id='title'>Python Pages</SemanticHeader>
-            </Link>
-            <NavBar handleLogoutClick={handleLogoutClick} user={user} />
-        </header> 
-    )
-}
+const Header = ({ user, handleLogoutClick }) => {
+  return (
+    <header>
+      <SemanticHeader id="header">
+        <NavBar handleLogoutClick={handleLogoutClick} user={user} />
+      </SemanticHeader>
+    </header>
+  );
+};
 
 export default Header;
