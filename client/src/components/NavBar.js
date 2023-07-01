@@ -26,15 +26,15 @@ const NavBar = ({ updateUser, user, handleLogoutClick }) => {
         <Menu.Menu position="right">
           {!user ? (
             <Menu.Item
-              as={NavLink}
-              exact
+                as={NavLink}
+                exact
               to="/login"
-              name="Login"
-              active={active === "login"}
-              onClick={handleClick}
+                name="Login"
+                active={active === "login"}
+                onClick={handleClick}
             />
           ) : (
-            <Menu.Item
+              <Menu.Item
               as={NavLink}
               exact
               to="/logout"
@@ -43,21 +43,29 @@ const NavBar = ({ updateUser, user, handleLogoutClick }) => {
               onClick={handleLogoutClick}
             />
           )}
-          <Menu.Item
+          {user ? (
+        <Menu.Item
             as={NavLink}
             to="/user-books"
             name="Your Library"
             active={active === "user-books"}
             onClick={handleClick}
           />
-          <Menu.Item
+          ) : (
+        null
+      )}
+      {user ? (
+        <Menu.Item
             as={NavLink}
             to="/books"
             name="Collection"
             active={active === "books"}
             onClick={handleClick}
           />
-          <Menu.Item
+          ) : (
+        null
+      )}
+      <Menu.Item
             as={NavLink}
             to="/contact-us"
             name="Contact Us"
