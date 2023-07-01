@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
+import { Card, Container, Button } from "semantic-ui-react";
 
 const BookDetails = ({ user, addUserBook, removeUserBook }) => {
   const { id } = useParams();
   const [book, setBook] = useState([]);
+  const history = useHistory();
 
   useEffect(() => {
     fetch(`/books/${id}`).then((res) => {
@@ -39,23 +41,38 @@ const BookDetails = ({ user, addUserBook, removeUserBook }) => {
     });
   };
 
-if (!book) return 'Loading...'
-const {author, genre, page_count, title} = book
-const userBooks = user?.user_books.map((userBook) => userBook.book)
-const bookInCollection = userBooks.some(book => book.title === title && book.author === author)
+  const handleBackToCollection = () => {
+    history.push("/books");
+  };
+
+  if (!book) return "Loading...";
+  const { author, genre, page_count, title } = book;
+  const userBooks = user?.user_books.map((userBook) => userBook.book);
+  const bookInCollection = userBooks.some(
+    (book) => book.title === title && book.author === author
+  );
+
   return (
-    <>
-      <div>Book Info</div>
-      <h1>Title: {title}</h1>
-      <h3>Author: {author}</h3>
-      <h3>Genre: {genre}</h3>
-      <h3>Page Count: {page_count}</h3>
-      {!bookInCollection ? (
-        <button onClick={handleAddBook}>Add to Library</button>
-      ) : (
-        <button onClick={handleRemoveBook}> Remove From Library</button>
-      )}
-    </>
+    <Container>
+      <Card centered>
+      <Button onClick={handleBackToCollection}>Back to Collection</Button>
+        <Card.Content>
+          <Card.Header>Title: {title}</Card.Header>
+          <Card.Description>
+            <h3>Author: {author}</h3>
+            <h3>Genre: {genre}</h3>
+            <h3>Page Count: {page_count}</h3>
+          </Card.Description>
+          <Card.Content extra>
+            {!bookInCollection ? (
+              <button onClick={handleAddBook}>Add to Library</button>
+            ) : (
+              <button onClick={handleRemoveBook}> Remove From Library</button>
+            )}
+          </Card.Content>
+        </Card.Content>
+      </Card>
+    </Container>
   );
 };
 
