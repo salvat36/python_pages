@@ -23,6 +23,7 @@ const NavBar = ({ updateUser, user, handleLogoutClick }) => {
       <Menu secondary id="navbar">
 
         <Menu.Menu position="left">
+        {user ? (
         <Menu.Item
               as={NavLink}
               to="/"
@@ -30,13 +31,14 @@ const NavBar = ({ updateUser, user, handleLogoutClick }) => {
               active={active === "home"}
               onClick={handleClick}
             />
+        ) : null}
           {!user ? (
             
             <Menu.Item
               as={NavLink}
               exact
               to="/login"
-              name="Login"
+              name="Python Pages"
               active={active === "login"}
               onClick={handleClick}
             />
@@ -68,14 +70,15 @@ const NavBar = ({ updateUser, user, handleLogoutClick }) => {
               onClick={handleClick}
             />
           ) : null}
+          {user ? (
           <Menu.Item
             as={NavLink}
             to="/contact-us"
             name="Contact Us"
             active={active === "contact-us"}
             onClick={handleClick}
-          />
-           
+            />
+          ) : null}
         </Menu.Menu>
         
       </Menu>

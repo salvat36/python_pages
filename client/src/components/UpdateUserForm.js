@@ -9,9 +9,14 @@ const UpdateUserForm = ({ onUpdate, user }) => {
   const updateSchema = yup.object().shape({
     username: yup
       .string()
+      .required()
       .min(8, "Too Short!")
       .max(18, "Too Long!"),
-    password: yup.string().min(8).max(20),
+    password: yup
+      .string()
+      .required()
+      .min(8)
+      .max(20),
   });
 
   const formik = useFormik({
