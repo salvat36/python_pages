@@ -1,13 +1,10 @@
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { Switch, Route, useParams, useHistory } from 'react-router-dom';
-
-
-//! THIS CODE ISNT FINISHED OR ATTACHED TO ANYTHING.
-//! SHELL FOR UPDATING USER. HAS BACKEND FUNCTIONALITY BUILT BUT NOT TESTED TOGETHER
+import { useHistory } from 'react-router-dom';
+import { Form, Button, Message } from "semantic-ui-react";
 
 const UpdateUserForm = ({ onUpdate, user }) => {
-  const history = useHistory()
+  const history = useHistory();
 
   const updateSchema = yup.object().shape({
     username: yup
@@ -36,11 +33,11 @@ const UpdateUserForm = ({ onUpdate, user }) => {
           setSubmitting(false);
           if (res.ok) {
             res.json().then((user) => {
-              onUpdate(user)
-              alert('Successfully updated your account!')
-              resetForm({values: ''})
-              history.push('/logout')
-              history.push('/user-books')
+              onUpdate(user);
+              alert('Successfully updated your account!');
+              resetForm({});
+              history.push('/logout');
+              history.push('/user-books');
             });
           } else {
             res.json().then((err) => setErrors(err.errors));
@@ -55,36 +52,43 @@ const UpdateUserForm = ({ onUpdate, user }) => {
 
   return (
     <div>
-      <form onSubmit={formik.handleSubmit}>
-        <div>
+      <Form onSubmit={formik.handleSubmit}>
+        <Form.Field>
           <label htmlFor="username">Username</label>
           <input
             type="text"
             name="username"
             value={formik.values.username}
             onChange={formik.handleChange}
+            className={formik.errors.username && formik.touched.username ? "error" : ""}
+            placeholder="Enter your new username"
           />
           {formik.errors.username && formik.touched.username && (
-            <div>{formik.errors.username}</div>
+            <Message negative content={formik.errors.username} />
           )}
-        </div>
-        <div>
+        </Form.Field>
+        
+        <Form.Field>
           <label htmlFor="password">Password</label>
           <input
             type="password"
             name="password"
             value={formik.values.password}
             onChange={formik.handleChange}
+            className={formik.errors.password && formik.touched.password ? "error" : ""}
+            placeholder="Enter your new password"
           />
           {formik.errors.password && formik.touched.password && (
-            <div>{formik.errors.password}</div>
+            <Message negative content={formik.errors.password} />
           )}
-        </div>
-      <button type='submit'>
-        Update Profile!
-      </button>
-      </form>
+        </Form.Field>
+        <Button type="submit" className="royal-blue-button">
+  Update Profile
+</Button>
+
+      </Form>
     </div>
-  )
-}
-export default UpdateUserForm
+  );
+};
+
+export default UpdateUserForm;

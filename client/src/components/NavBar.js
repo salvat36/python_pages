@@ -4,6 +4,7 @@ import { Menu, Container } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 
+
 const NavBar = ({ updateUser, user, handleLogoutClick }) => {
   const location = useLocation();
   const [active, setActive] = useState("");
@@ -20,21 +21,19 @@ const NavBar = ({ updateUser, user, handleLogoutClick }) => {
   return (
     <Container>
       <Menu secondary id="navbar">
-        <Menu.Item as={Link} to="/" header>
-          Python Pages
-        </Menu.Item>
-        <Menu.Menu position="right">
+
+        <Menu.Menu position="left">
           {!user ? (
             <Menu.Item
-                as={NavLink}
-                exact
+              as={NavLink}
+              exact
               to="/login"
-                name="Login"
-                active={active === "login"}
-                onClick={handleClick}
+              name="Login"
+              active={active === "login"}
+              onClick={handleClick}
             />
           ) : (
-              <Menu.Item
+            <Menu.Item
               as={NavLink}
               exact
               to="/logout"
@@ -44,28 +43,24 @@ const NavBar = ({ updateUser, user, handleLogoutClick }) => {
             />
           )}
           {user ? (
-        <Menu.Item
-            as={NavLink}
-            to="/user-books"
-            name="Your Library"
-            active={active === "user-books"}
-            onClick={handleClick}
-          />
-          ) : (
-        null
-      )}
-      {user ? (
-        <Menu.Item
-            as={NavLink}
-            to="/books"
-            name="Collection"
-            active={active === "books"}
-            onClick={handleClick}
-          />
-          ) : (
-        null
-      )}
-      <Menu.Item
+            <Menu.Item
+              as={NavLink}
+              to="/user-books"
+              name="Your Library"
+              active={active === "user-books"}
+              onClick={handleClick}
+            />
+          ) : null}
+          {user ? (
+            <Menu.Item
+              as={NavLink}
+              to="/books"
+              name="Collection"
+              active={active === "books"}
+              onClick={handleClick}
+            />
+          ) : null}
+          <Menu.Item
             as={NavLink}
             to="/contact-us"
             name="Contact Us"
@@ -79,3 +74,4 @@ const NavBar = ({ updateUser, user, handleLogoutClick }) => {
 };
 
 export default NavBar;
+

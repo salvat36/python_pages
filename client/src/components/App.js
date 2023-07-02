@@ -11,7 +11,9 @@ import '../App.css';
 import UserBooks from './UserBooks';
 import BookDetails from './BookDetails';
 import SearchBooks from './SearchBooks';
-
+import ContactUs from './ContactUs'; 
+import { CardContent } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 function App() {
 
   const [user, setUser] = useState(null);
@@ -129,9 +131,11 @@ if (!user)  {
   })
 
   return (
+    
     <>
     <Header handleLogoutClick={handleLogoutClick} user={user}/>
       <Switch>
+        
         <Route exact path='/books'>
           <SearchBooks searchBook={searchBook} setSearchBook={setSearchBook} onSearch={onSearch} />
           <AllBooks booksToDisplay={booksToDisplay} />
@@ -142,7 +146,31 @@ if (!user)  {
         <Route exact path='/books/:id'>
           <BookDetails user={user} addUserBook={addUserBook} removeUserBook={removeUserBook}/>
         </Route>
+        <Route exact path="/contact-us" component={ContactUs} />
+        <Route exact path='/'>
+  <CardContent>
+    <h2>Welcome to Python Pages!</h2>
+    <p>
+      Thank you for visiting our website. We are excited to have you here and
+      help you on your Python programming journey.
+    </p>
+    <p>
+      Getting started is easy:
+      <ol>
+        <li>Explore our collection of books by clicking on the "Books" tab above.</li>
+        <li>Find books that interest you and click on them to view details.</li>
+        <li>Add books to your reading list and track your progress.</li>
+      </ol>
+    </p>
+    <p>
+      If you have any questions or need support, please don't hesitate to{' '}
+      <Link to="/contact-us">contact us</Link>. Our team is always ready to assist you.
+    </p>
+  </CardContent>
+</Route>
+
       </Switch>
+      
     </>
   )
 }

@@ -45,6 +45,10 @@ const BookDetails = ({ user, addUserBook, removeUserBook }) => {
     history.push("/books");
   };
 
+  const handleGoToLibrary = () => {
+    history.push("/user-books");
+  };
+
   if (!book) return "Loading...";
   const { author, genre, page_count, title } = book;
   const userBooks = user?.user_books.map((userBook) => userBook.book);
@@ -55,7 +59,7 @@ const BookDetails = ({ user, addUserBook, removeUserBook }) => {
   return (
     <Container>
       <Card centered>
-      <Button onClick={handleBackToCollection}>Back to Collection</Button>
+        <Button onClick={handleBackToCollection}>Back to Collection</Button>
         <Card.Content>
           <Card.Header>Title: {title}</Card.Header>
           <Card.Description>
@@ -65,12 +69,23 @@ const BookDetails = ({ user, addUserBook, removeUserBook }) => {
           </Card.Description>
           <Card.Content extra>
             {!bookInCollection ? (
-              <button onClick={handleAddBook}>Add to Library</button>
+              <Button
+                className="ui button teal"
+                onClick={handleAddBook}
+              >
+                Add to Library
+              </Button>
             ) : (
-              <button onClick={handleRemoveBook}> Remove From Library</button>
+              <Button
+                className="ui button red"
+                onClick={handleRemoveBook}
+              >
+                Remove From Library
+              </Button>
             )}
           </Card.Content>
         </Card.Content>
+        <Button onClick={handleGoToLibrary}>Your Library</Button>
       </Card>
     </Container>
   );
