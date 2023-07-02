@@ -82,7 +82,7 @@ const Authentication = ({ updateUser }) => {
           )}
         </Form.Field>
 
-        <Button type="submit">Login</Button>
+        <Button type="submit">{signUp ? 'Signup' : 'Login'}</Button>
       </Form>
       {errors.length > 0 && (
         <Message negative>
