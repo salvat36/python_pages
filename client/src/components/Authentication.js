@@ -91,7 +91,7 @@ const Authentication = ({ updateUser }) => {
           <Message.Header>Error Occured:</Message.Header>
           <Message.List>
             {errors.map((error, index) => (
-              <Message.Item key={index}>{error}</Message.Item>
+              <Message.Item key={index}>Must submit a valid username/password</Message.Item>
             ))}
           </Message.List>
         </Message>
