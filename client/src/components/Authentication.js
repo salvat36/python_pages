@@ -60,6 +60,7 @@ const Authentication = ({ updateUser }) => {
         <Form.Field>
           <label htmlFor="username">Username:</label>
           <input
+            placeholder="Username"
             type="text"
             name="username"
             value={formik.values.username}
@@ -72,6 +73,7 @@ const Authentication = ({ updateUser }) => {
         <Form.Field>
           <label htmlFor="password">Password:  </label>
           <input
+            placeholder="Password"
             type="password"
             name="password"
             value={formik.values.password}

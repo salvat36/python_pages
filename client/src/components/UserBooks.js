@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Card, Container } from "semantic-ui-react";
+import { Card, Container, Image } from "semantic-ui-react";
 import BookCard from "./BookCard";
 import UpdateUserForm from "./UpdateUserForm";
 
@@ -17,6 +17,7 @@ const UserBooks = ({ user, updateUser, handleDeleteUser }) => {
   return (
     <Container>
       <Card centered>
+          <Image src={user.avatar} wrapped ui={false}/>
         <Card.Content>
           <Card.Header>Welcome to your library, {user.username}!</Card.Header>
           <Card.Description>
