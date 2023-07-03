@@ -31,8 +31,8 @@ const AllBooks = ({ booksToDisplay }) => {
             className="hover-card"
             style={{ width: '200px', position: 'relative' }}
             onClick={(e) => {
-              e.preventDefault(); // Prevent the default link behavior
-              history.push(`/books/${book.props.id}`); // Navigate programmatically using history.push
+              e.preventDefault();
+              history.push(`/books/${book.props.id}`);
             }}
           >
             <div className="card-border"></div>
@@ -42,7 +42,6 @@ const AllBooks = ({ booksToDisplay }) => {
               <Card.Description>Page Count: {book.props.page_count}</Card.Description>
             </Card.Content>
             <Card.Content extra>
-          
             </Card.Content>
           </Card>
         ))}
