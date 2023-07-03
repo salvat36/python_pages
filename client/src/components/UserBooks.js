@@ -25,9 +25,9 @@ const UserBooks = ({ user, updateUser, handleDeleteUser }) => {
   return (
     <Container style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
       <Card id="library-card" centered className="animated-border" style={{ width: "800px", padding: "20px", height: "600px", backgroundColor: "teal" }}>
-          <Image src={user.avatar} wrapped ui={false}/>
         <Card.Content>
           <Card.Header>Welcome to your library, {user.username}!</Card.Header>
+          {/* <Image  className='avatar' src={user.avatar} wrapped ui={false}/> */}
           <Card.Description>
             <Button className="ui button red" onClick={handleDeleteUser}>Delete Account</Button>
             <Button className="ui button teal" onClick={toggleForm}>Edit Account</Button>

@@ -32,8 +32,8 @@ const ContactUs = () => {
               </a>
             </p>
             <p>
-              <a href="https://github.com/sturco42">
-                https://github.com/sturco42
+              <a href="https://github.com/Chaospearl64">
+              https://github.com/Chaospearl64
               </a>
             </p>
           </Card.Description>

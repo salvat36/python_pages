@@ -23,7 +23,15 @@ const NavBar = ({ updateUser, user, handleLogoutClick }) => {
       <Menu secondary id="navbar">
 
         <Menu.Menu position="left">
+        <Menu.Item
+              as={NavLink}
+              to="/"
+              name="Home"
+              active={active === "home"}
+              onClick={handleClick}
+            />
           {!user ? (
+            
             <Menu.Item
               as={NavLink}
               exact
@@ -67,7 +75,9 @@ const NavBar = ({ updateUser, user, handleLogoutClick }) => {
             active={active === "contact-us"}
             onClick={handleClick}
           />
+           
         </Menu.Menu>
+        
       </Menu>
     </Container>
   );

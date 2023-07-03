@@ -112,12 +112,13 @@ body {
 
 #navbar .menu .item {
   font-size: 18px;
-  margin-right: 15px;
+  /* margin-right: 15px; */
+  margin-top: 20px
 }
 
-#navbar .menu .item:last-child {
+/* #navbar .menu .item:last-child {
   margin-right: 0;
-}
+} */
 
 #navbar .menu .item:hover {
   opacity: 0.5;
@@ -155,11 +156,23 @@ body {
   align-items: center;
   height: 100vh;
   background-color: teal;
+  margin-top:20px;
+  padding: 20px
+  
 }
-
+#navbar {
+  #search-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    color: teal;
+    text-decoration-style: wavy;
+  }
+}
 .auth-form {
   width: 300px;
   margin: 0 auto;
+
 }
 
 .auth-form .error {
@@ -247,4 +260,3 @@ body {
     font-size: 24px;
   }
   
-
