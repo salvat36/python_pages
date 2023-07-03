@@ -1,43 +1,40 @@
-import React, { useEffect, useState } from 'react';
-import { Switch, Route, useParams, useHistory } from 'react-router-dom';
-import { Card, CardContent } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
-import Navbar from './NavBar';
-import AllBooks from './AllBooks';
-import LoginForm from './LoginForm';
-import SignupForm from './SignupForm';
-import Authentication from './Authentication';
-import Book from './BookCard';
-import Header from './Header';
-import '../App.css';
-import UserBooks from './UserBooks';
-import BookDetails from './BookDetails';
-import SearchBooks from './SearchBooks';
-import ContactUs from './ContactUs';
+import React, { useEffect, useState } from 'react'
+import { Switch, Route, useParams, useHistory } from 'react-router-dom'
+import { Card, CardContent } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
+import Navbar from './NavBar'
+import AllBooks from './AllBooks'
+import Authentication from './Authentication'
+import Header from './Header'
+import '../App.css'
+import UserBooks from './UserBooks'
+import BookDetails from './BookDetails'
+import SearchBooks from './SearchBooks'
+import ContactUs from './ContactUs'
 
 function App() {
-  const [user, setUser] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const history = useHistory();
-  const [books, setBooks] = useState([]);
-  const { id } = useParams();
+  const [user, setUser] = useState(null)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const history = useHistory()
+  const [books, setBooks] = useState([])
+  const { id } = useParams()
 
-  const [searchBook, setSearchBook] = useState('');
+  const [searchBook, setSearchBook] = useState('')
 
   useEffect(() => {
     fetch('/books')
       .then((res) => res.json())
       .then(setBooks)
-      .catch((err) => console.log(err));
-  }, []);
+      .catch((err) => console.log(err))
+  }, [])
 
   const onSearch = (input) => {
-    setSearchBook(input);
-  };
+    setSearchBook(input)
+  }
 
   const updateUser = (user) => {
-    setUser(user);
-  };
+    setUser(user)
+  }
 
   const addUserBook = (book) => {
     setUser((currentUser) => ({
@@ -48,8 +45,8 @@ function App() {
           book,
         },
       ],
-    }));
-  };
+    }))
+  }
 
   const removeUserBook = (book) => {
     setUser((currentUser) => ({
@@ -70,7 +67,7 @@ function App() {
           ),
         };
       }
-      return currentUser;
+      return currentUser
     });
   };
 
