@@ -59,7 +59,7 @@ const LoginForm = ({ onLogin, handleLoginClick }) => {
                 }
               : null
           }
-          style={{ borderRadius: "10px" }} // Rounded input field
+          style={{ borderRadius: "10px" }}
         />
         <Form.Input
           label="Password"
@@ -74,7 +74,7 @@ const LoginForm = ({ onLogin, handleLoginClick }) => {
                 }
               : null
           }
-          style={{ borderRadius: "10px" }} // Rounded input field
+          style={{ borderRadius: "10px" }}
         />
         <Button type="submit" primary style={{ borderRadius: "10px" }}>
           Login

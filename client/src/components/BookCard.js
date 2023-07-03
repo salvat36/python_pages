@@ -1,10 +1,7 @@
 import React from 'react'
-import { useEffect, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-const BookCard = ( {author, genre, page_count, title, id} ) => {
-
-const [error, setError] = useState(null)
+const BookCard = ( {author, title, id} ) => {
 
   return (
     <div>
