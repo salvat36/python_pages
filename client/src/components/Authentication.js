@@ -52,8 +52,6 @@ const Authentication = ({ updateUser }) => {
         .catch((error) => console.log(error));
     },
   });
-
-  
   return (
     <div className="auth-container">
       <Card centered>
@@ -66,6 +64,7 @@ const Authentication = ({ updateUser }) => {
               <Form.Field>
                 <label htmlFor="username">Username:</label>
                 <input
+                  placeholder="Username"
                   type="text"
                   name="username"
                   value={formik.values.username}
@@ -84,6 +83,7 @@ const Authentication = ({ updateUser }) => {
               <Form.Field>
                 <label htmlFor="password">Password:</label>
                 <input
+                  placeholder="Password"
                   type="password"
                   name="password"
                   value={formik.values.password}
@@ -109,7 +109,7 @@ const Authentication = ({ updateUser }) => {
                 <Message.Header>Error Occurred:</Message.Header>
                 <Message.List>
                   {errors.map((error, index) => (
-                    <Message.Item key={index}>{error}</Message.Item>
+                    <Message.Item key={index}>Must enter a valid username/password. </Message.Item>
                   ))}
                 </Message.List>
               </Message>
@@ -125,5 +125,4 @@ const Authentication = ({ updateUser }) => {
     </div>
   );
 };
-
 export default Authentication;

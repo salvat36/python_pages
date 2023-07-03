@@ -76,6 +76,9 @@ class User(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     
     username = db.Column(db.String, unique=True)
+
+    avatar = db.Column(db.String)
+    
     # email might be added later
     _password_hash = db.Column(db.String)
     # admin = db.Column(db.String, default=False)
@@ -99,7 +102,7 @@ class User(db.Model, SerializerMixin):
     user_books = db.relationship('UserBook', back_populates='user', cascade='all')
     books = association_proxy('user_books', 'book')
     
-    serialize_only = ('id', 'username', 'user_books', 'user_books.book')
+    serialize_only = ('id', 'username', 'avatar', 'user_books', 'user_books.book')
     serialize_rules = ('-user_books.id', '-user_books.user_id')
 
     @validates('username')

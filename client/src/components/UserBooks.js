@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { Card, Container, Button } from "semantic-ui-react";
+import { Card, Container, Button, Image } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import UpdateUserForm from "./UpdateUserForm";
-
+import BookCard from "./BookCard";
 const UserBooks = ({ user, updateUser, handleDeleteUser }) => {
   const userBooksList = user?.user_books.map((userBook) => (
     <Card key={userBook.book.id} className="hover-card">
@@ -25,6 +25,7 @@ const UserBooks = ({ user, updateUser, handleDeleteUser }) => {
   return (
     <Container style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
       <Card id="library-card" centered className="animated-border" style={{ width: "800px", padding: "20px", height: "600px", backgroundColor: "teal" }}>
+          <Image src={user.avatar} wrapped ui={false}/>
         <Card.Content>
           <Card.Header>Welcome to your library, {user.username}!</Card.Header>
           <Card.Description>
