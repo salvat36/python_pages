@@ -60,6 +60,7 @@ const Authentication = ({ updateUser }) => {
         <Form.Field>
           <label htmlFor="username">Username:</label>
           <input
+            placeholder="Username"
             type="text"
             name="username"
             value={formik.values.username}
@@ -72,6 +73,7 @@ const Authentication = ({ updateUser }) => {
         <Form.Field>
           <label htmlFor="password">Password:  </label>
           <input
+            placeholder="Password"
             type="password"
             name="password"
             value={formik.values.password}
@@ -82,14 +84,14 @@ const Authentication = ({ updateUser }) => {
           )}
         </Form.Field>
 
-        <Button type="submit">Login</Button>
+        <Button type="submit">{signUp ? 'Signup' : 'Login'}</Button>
       </Form>
       {errors.length > 0 && (
         <Message negative>
           <Message.Header>Error Occured:</Message.Header>
           <Message.List>
             {errors.map((error, index) => (
-              <Message.Item key={index}>{error}</Message.Item>
+              <Message.Item key={index}>Must submit a valid username/password</Message.Item>
             ))}
           </Message.List>
         </Message>
