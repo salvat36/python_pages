@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { Form, Button, Message } from "semantic-ui-react";
+import { Form, Button, Message, Card } from "semantic-ui-react";
 
 const Authentication = ({ updateUser }) => {
   const [signUp, setSignUp] = useState(false);
@@ -53,52 +53,75 @@ const Authentication = ({ updateUser }) => {
     },
   });
   return (
-    <div>
-      <h1>Please Login or Signup!</h1>
-      <h2>{signUp ? "Create an Account Below: " : "Login Below: "} </h2>
-      <Form onSubmit={formik.handleSubmit}>
-        <Form.Field>
-          <label htmlFor="username">Username:</label>
-          <input
-            placeholder="Username"
-            type="text"
-            name="username"
-            value={formik.values.username}
-            onChange={formik.handleChange}
-          />
-          {formik.errors.username && formik.touched.username && (
-            <Message negative content={formik.errors.username} />
-          )}
-        </Form.Field>
-        <Form.Field>
-          <label htmlFor="password">Password:  </label>
-          <input
-            placeholder="Password"
-            type="password"
-            name="password"
-            value={formik.values.password}
-            onChange={formik.handleChange}
-          />
-          {formik.errors.password && formik.touched.password && (
-            <Message negative content={formik.errors.password} />
-          )}
-        </Form.Field>
+    <div className="auth-container">
+      <Card centered>
+        <Card.Content>
+          <Card.Header>
+            Please {signUp ? "Sign Up" : "Login"} to Continue
+          </Card.Header>
+          <Card.Description>
+            <Form onSubmit={formik.handleSubmit}>
+              <Form.Field>
+                <label htmlFor="username">Username:</label>
+                <input
+                  placeholder="Username"
+                  type="text"
+                  name="username"
+                  value={formik.values.username}
+                  onChange={formik.handleChange}
+                  className={
+                    formik.errors.username && formik.touched.username
+                      ? "error"
+                      : ""
+                  }
+                  style={{ borderRadius: "10px" }} // Rounded input field
+                />
+                {formik.errors.username && formik.touched.username && (
+                  <Message negative content={formik.errors.username} />
+                )}
+              </Form.Field>
+              <Form.Field>
+                <label htmlFor="password">Password:</label>
+                <input
+                  placeholder="Password"
+                  type="password"
+                  name="password"
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  className={
+                    formik.errors.password && formik.touched.password
+                      ? "error"
+                      : ""
+                  }
+                  style={{ borderRadius: "10px" }} // Rounded input field
+                />
+                {formik.errors.password && formik.touched.password && (
+                  <Message negative content={formik.errors.password} />
+                )}
+              </Form.Field>
 
-        <Button type="submit">{signUp ? 'Signup' : 'Login'}</Button>
-      </Form>
-      {errors.length > 0 && (
-        <Message negative>
-          <Message.Header>Error Occured:</Message.Header>
-          <Message.List>
-            {errors.map((error, index) => (
-              <Message.Item key={index}>Must submit a valid username/password</Message.Item>
-            ))}
-          </Message.List>
-        </Message>
-      )}
-      <Button onClick={handleClick}>
-        {signUp ? "Login here!" : "Create an Account!"}
-      </Button>
+              <Button id="login-button" type="submit" primary fluid style={{ borderRadius: "10px" }}>
+                {signUp ? "Sign Up" : "Login"}
+              </Button> 
+            </Form>
+            {errors.length > 0 && (
+              <Message negative>
+                <Message.Header>Error Occurred:</Message.Header>
+                <Message.List>
+                  {errors.map((error, index) => (
+                    <Message.Item key={index}>Must enter a valid username/password. </Message.Item>
+                  ))}
+                </Message.List>
+              </Message>
+            )}
+          </Card.Description>
+        </Card.Content>
+        <Card.Content extra>
+          <Button onClick={handleClick} fluid style={{ borderRadius: "10px" }}>
+            {signUp ? "Login" : "Create an Account"}
+          </Button> 
+        </Card.Content>
+      </Card>
     </div>
   );
 };

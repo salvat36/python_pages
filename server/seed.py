@@ -46,7 +46,7 @@ def create_users():
             password_hash = 'password',
             created_at = fake.date_time(),
             updated_at = fake.date_time(),
-            avatar = fake.image_url(width=500, height=500)
+            avatar = fake.image_url(width=150, height=150)
         )
         users.append(user)
     return users

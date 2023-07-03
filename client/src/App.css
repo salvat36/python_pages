@@ -1,80 +1,262 @@
 a {
-    margin-top: 10px;
-    margin-bottom: 5px;
-    margin-right: 5px;
-  }
-  #header {
-    background-color: teal;
-    color: white;
-    padding: 25px ;
-    text-align: center;
-  }
-  
-  
-  a:hover,
-  a:active {
-    background-color: blue;
-    color: white;
-  }
-  
-  button {
-    background-color: white;
-    color: black;
-    border: 2px solid teal;
-    padding: 11px 20px;
-    text-align: center;
-    text-decoration:color(from color srgb r g b);
-    display: inline-block;
-    margin-top: 10px;
-    margin-bottom: 5px;
-    margin-right: 5px;
-  }
-  
-  button:hover,
-  button:active {
-    background-color: teal;
-    color: white;
-  }
-  
-  body {
-    margin: 0; /* Remove default margin */
-    padding: 0; /* Remove default padding */
-  }
-  
-  .hover-card:hover {
-    outline: 4px solid teal;
-  }
-  
-  
-   .container {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  } 
+  margin-top: 10px;
+  margin-bottom: 5px;
+  margin-right: 5px;
+  text-align: center;
+  text-decoration: wavy;
+}
 
+#header {
+  background-color: teal;
+  color: white;
+  padding: 2%;
+  text-align: center;
+  margin-top: auto;
+}
 
+a:hover,
+a:active {
+  color: white;
+}
+
+button {
+  background-color: white;
+  color: black;
+  border: 2px solid teal;
+  padding: 11px 20px;
+  text-align: center;
+  text-decoration: color(from color srgb r g b);
+  display: inline-block;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  margin-right: 5px;
+}
+
+button:hover,
+button:active {
+  background-color: teal;
+  color: white;
+}
+
+body {
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+}
+
+.hover-card:hover {
+  outline: 4px solid teal;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+.hover-card {
+    overflow: hidden;
+    position: relative;
+  }
   
+  .card-border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease-in-out;
+    z-index: 1;
+  }
   
+  .hover-card:hover .card-border {
+    animation: fadeBorder 1s infinite alternate;
+  }
+  
+  @keyframes fadeBorder {
+    0% {
+      border-color: transparent;
+    }
+    50% {
+      border-color: teal;
+    }
+    100% {
+      border-color: transparent;
+    }
+  }
+  
+
+#search-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  border-radius: 10px;
+}
+
+#title {
+  width: 100%;
+  background-color: teal;
+  color: teal;
+  text-align: center;
+  padding: 20px 0;
+}
+
+#navbar {
   #search-container {
     display: flex;
     justify-content: center;
     margin-top: 20px;
+    color: teal;
+    text-decoration-style: wavy;
   }
+}
+
+#navbar .menu .item {
+  font-size: 18px;
+  /* margin-right: 15px; */
+  margin-top: 20px
+}
+
+/* #navbar .menu .item:last-child {
+  margin-right: 0;
+} */
+
+#navbar .menu .item:hover {
+  opacity: 0.5;
+  background-color: rgb(7, 83, 83);
   
-  #title {
-    width: 100%;
-    background-color: teal;
-    color: white;
-    text-align: center;
-    padding: 20px 0;
-  }
   
-  #navbar {
-    #search-container {
-        display: flex;
-        justify-content: center;
-        margin-top: 20px;
+}
+
+.hover-card:hover {
+    outline: 4px solid rgb(85, 101, 101);
+    .hover-card .card-header {
         color: teal;
-       
       }
+      
+}
+
+#library-card {
+  border: 25px double rgb(0, 97, 97);
+  
+  border-radius: 90px;
+}
+.card-content {
+    color: teal;
   }
+  
+
+
+#login-button {
+  background-color: teal;
+}
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: teal;
+  margin-top:20px;
+  padding: 20px
+  
+}
+#navbar {
+  #search-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    color: teal;
+    text-decoration-style: wavy;
+  }
+}
+.auth-form {
+  width: 300px;
+  margin: 0 auto;
+
+}
+
+.auth-form .error {
+  border-color: red !important;
+}
+
+.auth-form .submit-button {
+  background-color: teal !important;
+  color: white !important;
+}
+
+.auth-form .error-message {
+  color: red;
+  margin-top: 10px;
+}
+
+.royal-blue-button {
+  color: royalblue;
+}
+
+#search {
+    border-radius: 15px;
+}
+
+#login-form {
+    border-radius: 20px;
+}
+
+
+/* App.css */
+
+.card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  animation: borderAnimation 4s infinite;
+}
+
+@keyframes borderAnimation {
+  0% {
+    border: 25% solid teal;
+  }
+  50% {
+    border: 25% solid transparent;
+  }
+  100% {
+    border: 25% solid teal;
+  }
+}
+
+
+  @keyframes borderAnimation {
+    0% {
+      border: 25% solid teal;
+    }
+    50% {
+      border: 25% solid transparent;
+    }
+    100% {
+      border: 25% solid teal;
+    }
+  }
+  
+  .welcome-card {
+    width: 400px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .welcome-card h2 {
+    font-size: 24px;
+  }
+  
+  .welcome-card p {
+    font-size: 18px;
+  }
+  
+  .welcome-card ol {
+    font-size: 16px;
+  }
+  
+  .welcome-card p.contact-us {
+    font-size: 24px;
+  }
+  

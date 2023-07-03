@@ -1,5 +1,6 @@
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { Form, Button, Message } from "semantic-ui-react";
 
 const LoginForm = ({ onLogin, handleLoginClick }) => {
   const loginSchema = yup.object().shape({
@@ -40,33 +41,56 @@ const LoginForm = ({ onLogin, handleLoginClick }) => {
         });
     },
   });
+
   return (
     <div>
       <h1>Login</h1>
-      <form onSubmit={formik.handleSubmit}>
-        <input
+      <Form id="login-form" onSubmit={formik.handleSubmit}>
+        <Form.Input
+          label="Username"
           type="text"
           name="username"
           value={formik.values.username}
           onChange={formik.handleChange}
+          error={
+            formik.errors.username && formik.touched.username
+              ? {
+                  content: formik.errors.username,
+                }
+              : null
+          }
+          style={{ borderRadius: "10px" }} // Rounded input field
         />
-        {formik.errors.username && formik.touched.username ? (
-          <div>{formik.errors.username}</div>
-        ) : null}
-        <input
-          type="text"
+        <Form.Input
+          label="Password"
+          type="password"
           name="password"
           value={formik.values.password}
           onChange={formik.handleChange}
+          error={
+            formik.errors.password && formik.touched.password
+              ? {
+                  content: formik.errors.password,
+                }
+              : null
+          }
+          style={{ borderRadius: "10px" }} // Rounded input field
         />
-        {formik.errors.password && formik.touched.password ? (
-          <div>{formik.errors.password}</div>
-        ) : null}
-
-        <button type="submit">Login</button>
-      </form>
-      <button onClick={handleLoginClick}> No Account?  Sign up Now!</button>
+        <Button type="submit" primary style={{ borderRadius: "10px" }}>
+          Login
+        </Button>
+      </Form>
+      <Button onClick={handleLoginClick} style={{ borderRadius: "10px" }}>
+        No Account? Sign up Now!
+      </Button>
+      {formik.errors.general && (
+        <Message negative>
+          <Message.Header>Error</Message.Header>
+          <p>{formik.errors.general}</p>
+        </Message>
+      )}
     </div>
   );
 };
+
 export default LoginForm;

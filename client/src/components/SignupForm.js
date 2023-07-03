@@ -1,5 +1,6 @@
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { Form, Button } from "semantic-ui-react";
 
 const SignupForm = ({ onSignup }) => {
   const signupSchema = yup.object().shape({
@@ -44,29 +45,41 @@ const SignupForm = ({ onSignup }) => {
   return (
     <div>
       <h1>Signup</h1>
-      <form onSubmit={formik.handleSubmit}>
-        <input
+      <Form onSubmit={formik.handleSubmit}>
+        <Form.Input
+          label="Username"
           type="text"
           name="username"
           value={formik.values.username}
           onChange={formik.handleChange}
+          error={
+            formik.errors.username && formik.touched.username
+              ? {
+                  content: formik.errors.username,
+                }
+              : null
+          }
         />
-        {formik.errors.username && formik.touched.username ? (
-          <div>{formik.errors.username}</div>
-        ) : null}
-        <input
-          type="text"
+        <Form.Input
+          label="Password"
+          type="password"
           name="password"
           value={formik.values.password}
           onChange={formik.handleChange}
+          error={
+            formik.errors.password && formik.touched.password
+              ? {
+                  content: formik.errors.password,
+                }
+              : null
+          }
         />
-        {formik.errors.password && formik.touched.password ? (
-          <div>{formik.errors.password}</div>
-        ) : null}
-
-        <button type="submit">Signup</button>
-      </form>
+        <Button type="submit" primary>
+          Signup
+        </Button>
+      </Form>
     </div>
   );
 };
+
 export default SignupForm;
