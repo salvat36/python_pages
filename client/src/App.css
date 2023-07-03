@@ -188,3 +188,63 @@ body {
     border-radius: 20px;
 }
 
+
+/* App.css */
+
+.card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  animation: borderAnimation 4s infinite;
+}
+
+@keyframes borderAnimation {
+  0% {
+    border: 25% solid teal;
+  }
+  50% {
+    border: 25% solid transparent;
+  }
+  100% {
+    border: 25% solid teal;
+  }
+}
+
+
+  @keyframes borderAnimation {
+    0% {
+      border: 25% solid teal;
+    }
+    50% {
+      border: 25% solid transparent;
+    }
+    100% {
+      border: 25% solid teal;
+    }
+  }
+  
+  .welcome-card {
+    width: 400px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .welcome-card h2 {
+    font-size: 24px;
+  }
+  
+  .welcome-card p {
+    font-size: 18px;
+  }
+  
+  .welcome-card ol {
+    font-size: 16px;
+  }
+  
+  .welcome-card p.contact-us {
+    font-size: 24px;
+  }
+  
+

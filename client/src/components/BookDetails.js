@@ -85,7 +85,7 @@ const BookDetails = ({ user, addUserBook, removeUserBook }) => {
             )}
           </Card.Content>
         </Card.Content>
-        <Button onClick={handleGoToLibrary}>Your Library</Button>
+        <Button onClick={handleGoToLibrary}>Library</Button>
       </Card>
     </Container>
   );
