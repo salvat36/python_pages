@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { Menu, Container } from "semantic-ui-react";
-import { useHistory } from "react-router-dom";
-import { Link } from "react-router-dom";
 
-
-const NavBar = ({ updateUser, user, handleLogoutClick }) => {
+const NavBar = ({ user, handleLogoutClick }) => {
   const location = useLocation();
   const [active, setActive] = useState("");
-  const history = useHistory();
 
   useEffect(() => {
     setActive(location.pathname.slice(1));
@@ -21,7 +17,6 @@ const NavBar = ({ updateUser, user, handleLogoutClick }) => {
   return (
     <Container>
       <Menu secondary id="navbar">
-
         <Menu.Menu position="left">
         {user ? (
         <Menu.Item
@@ -87,4 +82,3 @@ const NavBar = ({ updateUser, user, handleLogoutClick }) => {
 };
 
 export default NavBar;
-

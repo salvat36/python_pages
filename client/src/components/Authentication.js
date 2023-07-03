@@ -125,4 +125,5 @@ const Authentication = ({ updateUser }) => {
     </div>
   );
 };
+
 export default Authentication;

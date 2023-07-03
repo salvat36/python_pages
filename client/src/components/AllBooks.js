@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Button, Container } from 'semantic-ui-react';
-import SearchBooks from './SearchBooks';
 import BookCard from './BookCard';
-import UserBooks from './UserBooks';
 import { useHistory } from 'react-router-dom';
 
 const AllBooks = ({ booksToDisplay }) => {

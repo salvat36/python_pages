@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { Card, Container, Button, Image } from "semantic-ui-react";
+import { useState } from "react";
+import { Card, Container, Button} from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import UpdateUserForm from "./UpdateUserForm";
-import BookCard from "./BookCard";
+
 const UserBooks = ({ user, updateUser, handleDeleteUser }) => {
   const userBooksList = user?.user_books.map((userBook) => (
     <Card key={userBook.book.id} className="hover-card">
